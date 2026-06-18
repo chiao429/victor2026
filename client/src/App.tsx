@@ -8,6 +8,9 @@ import { StageStepPage } from './pages/StageStepPage';
 import { StageCompletePage } from './pages/StageCompletePage';
 import { CompletePage } from './pages/CompletePage';
 import { ErrorPage } from './pages/ErrorPage';
+import { StageSelectPage } from './pages/StageSelectPage';
+import { IdentityPage } from './pages/IdentityPage';
+import { RequireIdentity } from './components/RequireIdentity';
 
 export default function App() {
   return (
@@ -16,11 +19,15 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/story" element={<StoryPage />} />
-          <Route path="/instructions" element={<InstructionsPage />} />
-          <Route path="/stages/:stageId" element={<StageIntroPage />} />
-          <Route path="/stages/:stageId/steps/:stepIndex" element={<StageStepPage />} />
-          <Route path="/stages/:stageId/complete" element={<StageCompletePage />} />
-          <Route path="/complete" element={<CompletePage />} />
+          <Route path="/identity" element={<IdentityPage />} />
+          <Route element={<RequireIdentity />}>
+            <Route path="/instructions" element={<InstructionsPage />} />
+            <Route path="/stages" element={<StageSelectPage />} />
+            <Route path="/stages/:stageId" element={<StageIntroPage />} />
+            <Route path="/stages/:stageId/steps/:stepIndex" element={<StageStepPage />} />
+            <Route path="/stages/:stageId/complete" element={<StageCompletePage />} />
+            <Route path="/complete" element={<CompletePage />} />
+          </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </ActivityProgressProvider>

@@ -18,7 +18,7 @@ export function StoryPage() {
         {activity.storyParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       </div>
       <BottomActions>
-        <button className="button button-primary" onClick={() => { start(); navigate('/instructions'); }}>
+        <button className="button button-primary" onClick={() => { start(); navigate('/identity'); }}>
           開始尋找少年 <span>→</span>
         </button>
       </BottomActions>

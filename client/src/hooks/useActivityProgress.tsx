@@ -13,7 +13,8 @@ import { createInitialProgress, loadProgress, STORAGE_KEY } from '../utils/progr
 interface ProgressContextValue {
   progress: ActivityProgress;
   start: () => void;
-  setPosition: (stageIndex: number, stepIndex: number) => void;
+  setRole: (role: 'leader' | 'member') => void;
+  setPosition: (stageIndex: number, stepIndex: number, stageId: string) => void;
   saveAnswer: (key: string, value: string) => void;
   saveUpload: (key: string, value: UploadedFileInfo) => void;
   markStageComplete: (stageId: string, stageIndex: number, totalStages: number) => void;
@@ -37,8 +38,18 @@ export function ActivityProgressProvider({ children }: { children: ReactNode }) 
     () => ({
       progress,
       start: () => patch({ started: true }),
-      setPosition: (currentStageIndex, currentStepIndex) =>
-        patch({ currentStageIndex, currentStepIndex, started: true }),
+      setRole: (role) => patch({ role, started: true }),
+      setPosition: (currentStageIndex, currentStepIndex, stageId) =>
+        setProgress((current) => {
+          return {
+            ...current,
+            currentStageIndex,
+            currentStepIndex,
+            visitedStageIds: [...new Set([...current.visitedStageIds, stageId])],
+            started: true,
+            updatedAt: new Date().toISOString(),
+          };
+        }),
       saveAnswer: (key, answer) =>
         setProgress((current) => ({
           ...current,
@@ -53,13 +64,14 @@ export function ActivityProgressProvider({ children }: { children: ReactNode }) 
         })),
       markStageComplete: (stageId, stageIndex, totalStages) =>
         setProgress((current) => {
-          const isLast = stageIndex === totalStages - 1;
+          const completedStageIds = [...new Set([...current.completedStageIds, stageId])];
           return {
             ...current,
-            completedStageIds: [...new Set([...current.completedStageIds, stageId])],
-            currentStageIndex: isLast ? stageIndex : stageIndex + 1,
+            visitedStageIds: [...new Set([...current.visitedStageIds, stageId])],
+            completedStageIds,
+            currentStageIndex: stageIndex,
             currentStepIndex: 0,
-            finished: isLast,
+            finished: completedStageIds.length === totalStages,
             updatedAt: new Date().toISOString(),
           };
         }),

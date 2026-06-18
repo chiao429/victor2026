@@ -2,12 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import activityData from '../data/activity.json';
 import type { ActivityConfig } from '../types/activity';
 import { BottomActions, Layout } from '../components/Layout';
+import { useActivityProgress } from '../hooks/useActivityProgress';
 
 const activity = activityData as ActivityConfig;
 
 export function InstructionsPage() {
   const navigate = useNavigate();
-  const firstStage = activity.stages[0];
+  const { progress } = useActivityProgress();
+  const isLeader = progress.role === 'leader';
+  const visibleInstructions = isLeader
+    ? activity.instructions
+    : activity.instructions.filter((item) => !item.includes('小隊長'));
   return (
     <Layout eyebrow="BEFORE DEPARTURE · 出發前">
       <h1 className="display-title">一起走完這本日記</h1>
@@ -16,12 +21,12 @@ export function InstructionsPage() {
         <div><strong>{activity.durationMinutes}</strong><span>預估分鐘</span></div>
         <div><strong>1</strong><span>支隊伍手機</span></div>
       </div>
-      <InfoSection number="01" title="活動進行方式" items={activity.instructions} />
-      <InfoSection number="02" title="小隊長操作" items={activity.leaderNotes} accent />
-      <InfoSection number="03" title="注意事項" items={activity.cautions} />
+      <InfoSection number="01" title="活動進行方式" items={visibleInstructions} />
+      {isLeader && <InfoSection number="02" title="小隊長操作" items={activity.leaderNotes} accent />}
+      <InfoSection number={isLeader ? '03' : '02'} title="注意事項" items={activity.cautions} />
       <BottomActions>
-        <button className="button button-primary" onClick={() => navigate(`/stages/${firstStage.id}`)}>
-          開始第一關 <span>→</span>
+        <button className="button button-primary" onClick={() => navigate('/stages')}>
+          查看所有關卡 <span>→</span>
         </button>
       </BottomActions>
     </Layout>

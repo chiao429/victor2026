@@ -3,8 +3,10 @@ import type { ActivityProgress, Stage, StageStep } from '../types/activity';
 export const STORAGE_KEY = 'victor-2026-activity-progress';
 
 export const createInitialProgress = (): ActivityProgress => ({
+  role: null,
   currentStageIndex: 0,
   currentStepIndex: 0,
+  visitedStageIds: [],
   completedStageIds: [],
   answers: {},
   uploadedFiles: {},
@@ -29,7 +31,14 @@ export function loadProgress(storage: Pick<Storage, 'getItem'> = localStorage): 
     ) {
       return createInitialProgress();
     }
-    return { ...createInitialProgress(), ...parsed };
+    return {
+      ...createInitialProgress(),
+      ...parsed,
+      role: parsed.role === 'leader' || parsed.role === 'member' ? parsed.role : null,
+      visitedStageIds: Array.isArray(parsed.visitedStageIds)
+        ? parsed.visitedStageIds
+        : parsed.completedStageIds,
+    };
   } catch {
     return createInitialProgress();
   }
@@ -54,32 +63,24 @@ export function completeStage(
   stageIndex: number,
   totalStages: number,
 ): ActivityProgress {
-  const isLast = stageIndex === totalStages - 1;
+  const completedStageIds = [...new Set([...progress.completedStageIds, stage.id])];
   return {
     ...progress,
-    completedStageIds: [...new Set([...progress.completedStageIds, stage.id])],
-    currentStageIndex: isLast ? stageIndex : stageIndex + 1,
+    visitedStageIds: [...new Set([...progress.visitedStageIds, stage.id])],
+    completedStageIds,
+    currentStageIndex: stageIndex,
     currentStepIndex: 0,
-    finished: isLast,
+    finished: completedStageIds.length === totalStages,
     updatedAt: new Date().toISOString(),
   };
 }
 
-export function isStageUnlocked(
-  requestedIndex: number,
-  progress: ActivityProgress,
-  stages: Stage[],
-): boolean {
-  if (requestedIndex < 0 || requestedIndex >= stages.length) return false;
-  if (requestedIndex <= progress.currentStageIndex) return true;
-  return stages
-    .slice(0, requestedIndex)
-    .every((stage) => progress.completedStageIds.includes(stage.id));
+export function resumePath(progress: ActivityProgress, stages: Stage[]): string {
+  if (!progress.started) return '/story';
+  if (!progress.role) return '/identity';
+  if (progress.finished && progress.completedStageIds.length === stages.length) return '/complete';
+  return '/stages';
 }
 
-export function resumePath(progress: ActivityProgress, stages: Stage[]): string {
-  if (progress.finished) return '/complete';
-  if (!progress.started) return '/story';
-  const stage = stages[Math.min(progress.currentStageIndex, stages.length - 1)];
-  return `/stages/${stage.id}/steps/${progress.currentStepIndex}`;
-}
+export const visitedProgress = (progress: ActivityProgress, totalStages: number) =>
+  totalStages === 0 ? 0 : (progress.visitedStageIds.length / totalStages) * 100;

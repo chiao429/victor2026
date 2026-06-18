@@ -1,19 +1,31 @@
-import type { ActivityProgress, StageStep, UploadedFileInfo } from '../types/activity';
+import type { ActivityProgress, CharacterCardData, StageStep, UploadedFileInfo } from '../types/activity';
 import { answerKey } from '../utils/progress';
+import { CharacterCard } from './CharacterCard';
 import { PhotoUpload } from './PhotoUpload';
+import {
+  GuidedDiscussion,
+  RealProfile,
+  RevealStory,
+  TaskTransition,
+  WritingPrompt,
+} from './TaskTwoContent';
 
 export function StepContent({
   stageId,
   step,
+  characterCard,
   progress,
   onAnswer,
   onUpload,
+  isLeader,
 }: {
   stageId: string;
   step: StageStep;
+  characterCard?: CharacterCardData;
   progress: ActivityProgress;
   onAnswer: (key: string, value: string) => void;
   onUpload: (key: string, value: UploadedFileInfo) => void;
+  isLeader: boolean;
 }) {
   const key = answerKey(stageId, step.id);
   const value = progress.answers[key] ?? '';
@@ -23,21 +35,31 @@ export function StepContent({
       <div className="step-icon" aria-hidden="true">
         {step.type === 'photo-upload' ? '▣' : step.type === 'discussion' ? '◌' : '✦'}
       </div>
-      <h1>{step.title}</h1>
-      {step.content && <p className="prose">{step.content}</p>}
+      <h1>{!isLeader && step.memberTitle ? step.memberTitle : step.title}</h1>
+      {step.type === 'task-transition' && <TaskTransition step={step} />}
+      {step.type === 'real-profile' && <RealProfile step={step} />}
+      {step.type === 'reveal-story' && <RevealStory step={step} />}
+      {step.type === 'writing-prompt' && <WritingPrompt step={step} isLeader={isLeader} />}
+      {step.type === 'guided-discussion' && <GuidedDiscussion step={step} />}
+      {step.content && !['task-transition', 'reveal-story', 'writing-prompt'].includes(step.type) && (
+        <p className="prose step-copy">{step.content}</p>
+      )}
+      {step.type === 'character-card' && characterCard && <CharacterCard card={characterCard} />}
       {step.imageUrl && <img className="story-image" src={step.imageUrl} alt="" />}
       {step.videoUrl && (
         <video className="story-image" controls playsInline src={step.videoUrl}>
           您的瀏覽器無法播放此影片。
         </video>
       )}
-      {step.leaderScript && (
+      {step.question && <h2 className="question">{step.question}</h2>}
+      {isLeader && step.leaderScript && step.type !== 'writing-prompt' && (
         <aside className="leader-script">
           <strong>小隊長請說</strong>
-          <p>{step.leaderScript}</p>
+          {step.leaderScript.split('\n\n').map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
         </aside>
       )}
-      {step.question && <h2 className="question">{step.question}</h2>}
       {step.type === 'text-input' && (
         <textarea
           className="text-input"

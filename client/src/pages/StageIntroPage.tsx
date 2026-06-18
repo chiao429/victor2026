@@ -3,7 +3,7 @@ import activityData from '../data/activity.json';
 import type { ActivityConfig } from '../types/activity';
 import { BottomActions, Layout } from '../components/Layout';
 import { useActivityProgress } from '../hooks/useActivityProgress';
-import { isStageUnlocked } from '../utils/progress';
+import { visitedProgress } from '../utils/progress';
 import { ErrorPage } from './ErrorPage';
 
 const activity = activityData as ActivityConfig;
@@ -15,12 +15,9 @@ export function StageIntroPage() {
   const stageIndex = activity.stages.findIndex((stage) => stage.id === stageId);
   const stage = activity.stages[stageIndex];
   if (!stage) return <ErrorPage message="找不到這個關卡。" />;
-  if (!isStageUnlocked(stageIndex, progress, activity.stages)) {
-    return <ErrorPage message="這個關卡還沒解鎖，請先完成目前的任務。" />;
-  }
 
   return (
-    <Layout eyebrow={`CHAPTER ${String(stageIndex + 1).padStart(2, '0')} · 關卡介紹`} progress={(stageIndex / activity.stages.length) * 100}>
+    <Layout eyebrow={`CHAPTER ${String(stageIndex + 1).padStart(2, '0')} · 關卡介紹`} progress={visitedProgress(progress, activity.stages.length)}>
       <div className="stage-count">第 {stageIndex + 1} 關 / 共 {activity.stages.length} 關</div>
       <h1 className="display-title">{stage.title}</h1>
       <p className="lead">{stage.description}</p>
@@ -33,7 +30,8 @@ export function StageIntroPage() {
         </div>
       </div>
       <BottomActions>
-        <button className="button button-primary" onClick={() => { setPosition(stageIndex, 0); navigate(`/stages/${stage.id}/steps/0`); }}>
+        <button className="button button-ghost compact" onClick={() => navigate('/stages')}>← 關卡總覽</button>
+        <button className="button button-primary" onClick={() => { setPosition(stageIndex, 0, stage.id); navigate(`/stages/${stage.id}/steps/0`); }}>
           我們到了，開始關卡 <span>→</span>
         </button>
       </BottomActions>

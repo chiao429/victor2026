@@ -11,14 +11,27 @@ describe('activity progress', () => {
     expect(progress).toMatchObject({ started: false, currentStageIndex: 0, currentStepIndex: 0 });
   });
 
-  it('resumes the saved stage and step', () => {
-    const progress = { ...createInitialProgress(), started: true, currentStageIndex: 1, currentStepIndex: 2 };
-    expect(resumePath(progress, activity.stages)).toBe('/stages/love-my-home/steps/2');
+  it('returns to stage selection after the activity has started', () => {
+    const progress = {
+      ...createInitialProgress(),
+      role: 'member' as const,
+      started: true,
+      currentStageIndex: 1,
+      currentStepIndex: 2,
+    };
+    expect(resumePath(progress, activity.stages)).toBe('/stages');
+  });
+
+  it('returns to identity selection when no role has been chosen', () => {
+    const progress = { ...createInitialProgress(), started: true };
+    expect(resumePath(progress, activity.stages)).toBe('/identity');
   });
 
   it('requires a stored answer for a required text step', () => {
-    const stage = activity.stages[0]!;
-    const step = stage.steps[2]!;
+    const stage = activity.stages.find((item) =>
+      item.steps.some((step) => step.type === 'text-input' && step.required),
+    )!;
+    const step = stage.steps.find((item) => item.type === 'text-input' && item.required)!;
     const progress = createInitialProgress();
     expect(canCompleteStep(step, stage.id, progress)).toBe(false);
     progress.answers[answerKey(stage.id, step.id)] = '我們很會互相傾聽';
