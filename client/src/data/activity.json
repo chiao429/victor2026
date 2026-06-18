@@ -1,0 +1,134 @@
+{
+  "title": "少年日記",
+  "subtitle": "2026 VICTOR 維克特體驗活動",
+  "intro": "一本遺落在校園角落的日記，記下了一名少年沒有說出口的話。跟著線索前進，也重新看見彼此。",
+  "storyTitle": "那本沒有名字的日記",
+  "storyParagraphs": [
+    "放學鐘聲之後，校園慢慢安靜下來。你們在長椅下發現一本磨舊的日記，封面只寫著一句話：如果有人看到，請替我走完剩下的路。",
+    "日記裡的少年把自己藏在別人的眼光、家人的期待，以及對未來的遲疑之中。他留下三個地點，也留下三個尚未回答的問題。",
+    "你們不需要猜出他是誰。你們要做的，是一起走過他曾停留的地方，聽見他的心事，也留下自己的答案。"
+  ],
+  "instructions": [
+    "由小隊長保管並操作這支手機，依畫面帶領全隊。",
+    "每一關先前往指定地點，再開始閱讀與任務。",
+    "討論沒有標準答案，請讓每位隊員都有說話的機會。"
+  ],
+  "leaderNotes": [
+    "畫面出現「小隊長請說」時，請將文字朗讀給隊員。",
+    "完成輸入或選擇照片後，才可前往下一步。",
+    "移動時先收起手機並注意隊伍安全。"
+  ],
+  "cautions": [
+    "不拍攝未同意入鏡的人。",
+    "不要進入封鎖或非活動開放區域。",
+    "照片只供當下預覽，不會上傳或保存，請勿選擇敏感內容。"
+  ],
+  "durationMinutes": 45,
+  "closingStory": "最後一頁沒有少年的答案，只有你們留下的字。也許成長不是立刻知道要去哪裡，而是有人願意陪你，把沒有說完的話好好聽完。",
+  "feedback": "謝謝你們一起完成這段路。請把今天聽見的一句話，帶回自己的生活裡。",
+  "meetingPoint": "活動服務台前廣場",
+  "stages": [
+    {
+      "id": "not-data",
+      "title": "我不是資料",
+      "description": "少年發現自己常被成績、排名和標籤描述，卻很少有人問他真正喜歡什麼。",
+      "location": "圖書館外側長廊",
+      "durationMinutes": 12,
+      "mapImageUrl": "/maps/library.svg",
+      "summary": "數字能描述一部分的我們，但不能定義完整的我們。",
+      "steps": [
+        {
+          "id": "diary",
+          "type": "story",
+          "title": "日記，第 17 頁",
+          "content": "今天老師發下成績單。大家先看總分，再看排名，好像那些數字就是我的全部。"
+        },
+        {
+          "id": "say",
+          "type": "leader-script",
+          "title": "把標籤暫時放下",
+          "leaderScript": "請大家輪流說一件「成績和資料看不出來，但很像你」的小事。可以是一個習慣、一種在意，或一件偷偷擅長的事。"
+        },
+        {
+          "id": "answer",
+          "type": "text-input",
+          "title": "替這一頁加一句話",
+          "question": "如果不能使用數字，你們會怎麼介紹這一隊？",
+          "placeholder": "我們是一群……",
+          "required": true
+        },
+        {
+          "id": "confirm",
+          "type": "confirmation",
+          "title": "帶著新的介紹出發",
+          "content": "全隊都聽見彼此的回答後，勾選確認完成。",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "love-my-home",
+      "title": "愛．我的家",
+      "description": "有些關心很安靜，安靜到我們常把它當成理所當然。",
+      "location": "榕樹下休憩區",
+      "durationMinutes": 15,
+      "mapImageUrl": "/maps/banyan.svg",
+      "summary": "家不一定完美，但那些微小的照顧，值得被重新看見。",
+      "steps": [
+        {
+          "id": "memory",
+          "type": "image",
+          "title": "一張沒有人的餐桌",
+          "content": "少年畫了一張晚餐後的餐桌。桌上留著一碗切好的水果。",
+          "imageUrl": "/images/table.svg"
+        },
+        {
+          "id": "discuss",
+          "type": "discussion",
+          "title": "那些沒說出口的照顧",
+          "question": "最近一次，你在家裡感受到被照顧，是什麼時候？",
+          "leaderScript": "每個人可以分享，也可以選擇只聽。請不要追問別人不想說的細節。"
+        },
+        {
+          "id": "photo",
+          "type": "photo-upload",
+          "title": "拍下「陪伴」",
+          "content": "用一張不露出陌生人正臉的照片，表達你們心中的陪伴。",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "future-message",
+      "title": "給未來的留言",
+      "description": "路的最後，少年想知道：現在的自己，能不能對未來說些什麼。",
+      "location": "操場看台入口",
+      "durationMinutes": 12,
+      "mapImageUrl": "/maps/track.svg",
+      "summary": "不必保證成為誰，只要記得今天曾經認真聽見自己。",
+      "steps": [
+        {
+          "id": "listen",
+          "type": "text",
+          "title": "最後一頁",
+          "content": "我還是不知道未來會變成什麼樣子。但如果有一天我忘了現在的感受，希望有人提醒我：那時候的我，也已經很努力了。"
+        },
+        {
+          "id": "future",
+          "type": "text-input",
+          "title": "寫給未來",
+          "question": "全隊一起留下一句想在一年後讀到的話。",
+          "placeholder": "一年後的我們，希望你還記得……",
+          "required": true
+        },
+        {
+          "id": "promise",
+          "type": "confirmation",
+          "title": "把留言收進日記",
+          "content": "朗讀你們留下的話，確認後完成最後一關。",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
