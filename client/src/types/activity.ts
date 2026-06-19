@@ -6,6 +6,17 @@ export type StageStepType =
   | 'reveal-story'
   | 'writing-prompt'
   | 'guided-discussion'
+  | 'notebook-intro'
+  | 'notebook-messages'
+  | 'notebook-writing'
+  | 'bullying-scenario'
+  | 'chair-experience'
+  | 'values-discussion'
+  | 'line-activity-intro'
+  | 'line-statements'
+  | 'line-reflection'
+  | 'faith-sharing'
+  | 'scripture-encouragement'
   | 'leader-script'
   | 'text'
   | 'image'
@@ -37,6 +48,23 @@ export interface StageStep {
   }[];
   prompts?: string[];
   examples?: string[];
+  messages?: {
+    author: string;
+    date: string;
+    message: string;
+    response: string;
+  }[];
+  writingOptions?: {
+    label: string;
+    prompt: string;
+    example?: string;
+  }[];
+  statements?: string[];
+  scriptureCards?: {
+    reference: string;
+    theme: string;
+    message: string;
+  }[];
 }
 
 export interface Stage {

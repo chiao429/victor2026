@@ -9,6 +9,15 @@ import {
   TaskTransition,
   WritingPrompt,
 } from './TaskTwoContent';
+import { NotebookIntro, NotebookMessages, NotebookWriting } from './NotebookContent';
+import { BullyingScenario, ChairExperience, ValuesDiscussion } from './BullyingContent';
+import {
+  FaithSharing,
+  LineActivityIntro,
+  LineReflection,
+  LineStatements,
+  ScriptureEncouragement,
+} from './FaithLineContent';
 
 export function StepContent({
   stageId,
@@ -41,7 +50,37 @@ export function StepContent({
       {step.type === 'reveal-story' && <RevealStory step={step} />}
       {step.type === 'writing-prompt' && <WritingPrompt step={step} isLeader={isLeader} />}
       {step.type === 'guided-discussion' && <GuidedDiscussion step={step} />}
-      {step.content && !['task-transition', 'reveal-story', 'writing-prompt'].includes(step.type) && (
+      {step.type === 'notebook-intro' && <NotebookIntro step={step} isLeader={isLeader} />}
+      {step.type === 'notebook-messages' && <NotebookMessages step={step} />}
+      {step.type === 'notebook-writing' && (
+        <NotebookWriting
+          step={step}
+          isLeader={isLeader}
+          value={value}
+          onChange={(answer) => onAnswer(key, answer)}
+        />
+      )}
+      {step.type === 'bullying-scenario' && <BullyingScenario step={step} isLeader={isLeader} />}
+      {step.type === 'chair-experience' && <ChairExperience step={step} isLeader={isLeader} />}
+      {step.type === 'values-discussion' && <ValuesDiscussion step={step} isLeader={isLeader} />}
+      {step.type === 'line-activity-intro' && <LineActivityIntro step={step} isLeader={isLeader} />}
+      {step.type === 'line-statements' && <LineStatements step={step} isLeader={isLeader} />}
+      {step.type === 'line-reflection' && <LineReflection step={step} isLeader={isLeader} />}
+      {step.type === 'faith-sharing' && <FaithSharing step={step} isLeader={isLeader} />}
+      {step.type === 'scripture-encouragement' && <ScriptureEncouragement step={step} isLeader={isLeader} />}
+      {step.content && ![
+        'task-transition',
+        'reveal-story',
+        'writing-prompt',
+        'notebook-intro',
+        'notebook-writing',
+        'bullying-scenario',
+        'chair-experience',
+        'line-activity-intro',
+        'line-reflection',
+        'faith-sharing',
+        'scripture-encouragement',
+      ].includes(step.type) && (
         <p className="prose step-copy">{step.content}</p>
       )}
       {step.type === 'character-card' && characterCard && <CharacterCard card={characterCard} />}
@@ -52,7 +91,19 @@ export function StepContent({
         </video>
       )}
       {step.question && <h2 className="question">{step.question}</h2>}
-      {isLeader && step.leaderScript && step.type !== 'writing-prompt' && (
+      {isLeader && step.leaderScript && ![
+        'writing-prompt',
+        'notebook-intro',
+        'notebook-writing',
+        'bullying-scenario',
+        'chair-experience',
+        'values-discussion',
+        'line-activity-intro',
+        'line-statements',
+        'line-reflection',
+        'faith-sharing',
+        'scripture-encouragement',
+      ].includes(step.type) && (
         <aside className="leader-script">
           <strong>小隊長請說</strong>
           {step.leaderScript.split('\n\n').map((paragraph) => (

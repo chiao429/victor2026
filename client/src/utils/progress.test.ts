@@ -27,11 +27,11 @@ describe('activity progress', () => {
     expect(resumePath(progress, activity.stages)).toBe('/identity');
   });
 
-  it('requires a stored answer for a required text step', () => {
+  it('requires a stored answer for a required notebook writing step', () => {
     const stage = activity.stages.find((item) =>
-      item.steps.some((step) => step.type === 'text-input' && step.required),
+      item.steps.some((step) => step.type === 'notebook-writing' && step.required),
     )!;
-    const step = stage.steps.find((item) => item.type === 'text-input' && item.required)!;
+    const step = stage.steps.find((item) => item.type === 'notebook-writing' && item.required)!;
     const progress = createInitialProgress();
     expect(canCompleteStep(step, stage.id, progress)).toBe(false);
     progress.answers[answerKey(stage.id, step.id)] = '我們很會互相傾聽';

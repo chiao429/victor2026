@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <rect width="800" height="420" fill="#ded7c8"/>
+  <rect x="85" y="45" width="630" height="235" rx="8" fill="#465344"/>
+  <g fill="#e9dfc9" font-family="serif" font-size="28" opacity=".72">
+    <text x="145" y="112" transform="rotate(-4 145 112)">不要理他</text>
+    <text x="350" y="95" transform="rotate(3 350 95)">怪人</text>
+    <text x="535" y="135" transform="rotate(-5 535 135)">沒用</text>
+    <text x="255" y="205" transform="rotate(4 255 205)">你不屬於這裡</text>
+  </g>
+  <path d="M330 338h140l-12-72H342z" fill="#8e4c3e"/>
+  <path d="M350 270v-55h100v55M360 338v45M440 338v45" fill="none" stroke="#63362e" stroke-width="15" stroke-linecap="round"/>
+  <path d="M70 382h660" stroke="#b8aa91" stroke-width="8"/>
+  <circle cx="400" cy="310" r="92" fill="none" stroke="#a74335" stroke-width="3" opacity=".25"/>
+</svg>

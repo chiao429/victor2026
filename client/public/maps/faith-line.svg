@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <rect width="800" height="420" fill="#e7dfcf"/>
+  <path d="M90 320H710" stroke="#a74335" stroke-width="6" stroke-dasharray="18 16"/>
+  <circle cx="110" cy="320" r="42" fill="#53634b"/>
+  <text x="110" y="331" text-anchor="middle" fill="#f7efe2" font-family="serif" font-size="34" font-weight="700">A</text>
+  <g fill="#a74335">
+    <circle cx="260" cy="270" r="18"/><circle cx="390" cy="225" r="18"/><circle cx="515" cy="165" r="18"/><circle cx="650" cy="105" r="18"/>
+  </g>
+  <g stroke="#a74335" stroke-width="9" stroke-linecap="round">
+    <path d="M260 292v45M240 310h40"/><path d="M390 247v45M370 265h40"/><path d="M515 187v45M495 205h40"/><path d="M650 127v45M630 145h40"/>
+  </g>
+  <path d="M85 70h630" stroke="#c5b79d" stroke-width="2"/>
+  <text x="400" y="58" text-anchor="middle" fill="#53634b" font-family="serif" font-size="25">在天父眼中，每一步都不改變你的價值</text>
+</svg>
