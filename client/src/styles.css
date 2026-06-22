@@ -563,6 +563,48 @@ button { -webkit-tap-highlight-color: transparent; }
 .step-dots { display: flex; gap: 6px; margin-bottom: 30px; }
 .step-dots span { flex: 1; height: 4px; border-radius: 4px; background: var(--paper-deep); }
 .step-dots .active { background: var(--red); }
+.stage-timer {
+  position: fixed;
+  z-index: 20;
+  top: 78px;
+  right: max(18px, calc((100vw - 520px) / 2 + 18px));
+  display: flex;
+  min-width: 112px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 11px;
+  color: #f8f1e5;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 4px;
+  background: rgba(63, 73, 59, 0.96);
+  box-shadow: 0 6px 18px rgba(35, 29, 24, 0.2);
+  backdrop-filter: blur(8px);
+}
+.stage-timer span { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; }
+.stage-timer strong { color: #efc1ad; font-family: Georgia, serif; font-size: 18px; }
+.stage-timer.urgent { background: rgba(125, 44, 34, 0.97); }
+.timer-alert-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  padding: 24px;
+  place-items: center;
+  background: rgba(25, 23, 20, 0.62);
+  backdrop-filter: blur(4px);
+}
+.timer-alert {
+  width: min(100%, 420px);
+  padding: 28px 24px 24px;
+  border-top: 6px solid var(--red);
+  background: var(--paper);
+  box-shadow: 0 22px 60px rgba(20, 17, 14, 0.35);
+}
+.timer-alert-label { color: var(--red); font-size: 10px; font-weight: 800; letter-spacing: 0.13em; }
+.timer-alert h2 { margin: 10px 0 12px; font-family: 'Noto Serif TC', serif; font-size: 30px; }
+.timer-alert p { margin: 0 0 24px; color: #514a42; font-size: 17px; line-height: 1.8; }
+.timer-alert .button { width: 100%; }
 .step-content h1 { margin: 10px 0 18px; font-family: 'Noto Serif TC', serif; font-size: 33px; line-height: 1.35; }
 .step-icon { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid var(--red); border-radius: 50%; color: var(--red); font-size: 22px; }
 .story-image, .photo-preview { display: block; width: 100%; margin: 22px 0; border: 8px solid #fffaf0; box-shadow: 3px 6px 18px rgba(60, 48, 36, 0.14); }
@@ -893,6 +935,7 @@ button { -webkit-tap-highlight-color: transparent; }
   body { padding: 24px 0; }
   .app-shell { min-height: calc(100dvh - 48px); border-radius: 10px; }
   .bottom-actions { bottom: 24px; border-radius: 0 0 10px 10px; }
+  .stage-timer { top: 102px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

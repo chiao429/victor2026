@@ -8,6 +8,7 @@ import { characterCardFromRealProfile } from '../utils/scoring';
 import { BottomActions, Layout } from '../components/Layout';
 import { StepContent } from '../components/StepContent';
 import { ErrorPage } from './ErrorPage';
+import { StageTimer } from '../components/StageTimer';
 
 const activity = activityData as ActivityConfig;
 
@@ -65,6 +66,7 @@ export function StageStepPage() {
 
   return (
     <Layout eyebrow={`${stage.title}${taskNumber ? ` · 任務${taskNumber === 1 ? '一' : '二'}` : ''} · STEP ${taskStepIndex + 1}`} progress={overall}>
+      <StageTimer stage={stage} />
       <div className="step-meta">
         <span>{taskNumber ? `任務${taskNumber === 1 ? '一' : '二'}` : `第 ${stepIndex + 1} 步`}</span>
         <span>{taskSteps.length} 步中的第 {taskStepIndex + 1} 步</span>

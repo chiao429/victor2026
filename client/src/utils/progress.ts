@@ -12,6 +12,8 @@ export const createInitialProgress = (): ActivityProgress => ({
   completedStageIds: [],
   answers: {},
   uploadedFiles: {},
+  stageTimerStartedAt: {},
+  stageTimerNotices: {},
   updatedAt: new Date().toISOString(),
   started: false,
   finished: false,
@@ -43,6 +45,12 @@ export function loadProgress(storage: Pick<Storage, 'getItem'> = localStorage): 
       role,
       teamGroup,
       teamName: typeof parsed.teamName === 'string' ? parsed.teamName : '',
+      stageTimerStartedAt: typeof parsed.stageTimerStartedAt === 'object' && parsed.stageTimerStartedAt !== null
+        ? parsed.stageTimerStartedAt
+        : {},
+      stageTimerNotices: typeof parsed.stageTimerNotices === 'object' && parsed.stageTimerNotices !== null
+        ? parsed.stageTimerNotices
+        : {},
       started: role ? Boolean(parsed.started) : false,
       visitedStageIds: Array.isArray(parsed.visitedStageIds)
         ? parsed.visitedStageIds

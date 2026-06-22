@@ -17,6 +17,8 @@ interface ProgressContextValue {
   setPosition: (stageIndex: number, stepIndex: number, stageId: string) => void;
   saveAnswer: (key: string, value: string) => void;
   saveUpload: (key: string, value: UploadedFileInfo) => void;
+  startStageTimer: (stageId: string) => void;
+  dismissStageTimerNotice: (stageId: string, notice: 'twoMinutes' | 'timeUp') => void;
   markStageComplete: (stageId: string, stageIndex: number, totalStages: number) => void;
   reset: () => void;
 }
@@ -64,6 +66,32 @@ export function ActivityProgressProvider({ children }: { children: ReactNode }) 
         setProgress((current) => ({
           ...current,
           uploadedFiles: { ...current.uploadedFiles, [key]: upload },
+          updatedAt: new Date().toISOString(),
+        })),
+      startStageTimer: (stageId) =>
+        setProgress((current) => ({
+          ...current,
+          stageTimerStartedAt: {
+            ...current.stageTimerStartedAt,
+            [stageId]: new Date().toISOString(),
+          },
+          stageTimerNotices: {
+            ...current.stageTimerNotices,
+            [stageId]: { twoMinutes: false, timeUp: false },
+          },
+          updatedAt: new Date().toISOString(),
+        })),
+      dismissStageTimerNotice: (stageId, notice) =>
+        setProgress((current) => ({
+          ...current,
+          stageTimerNotices: {
+            ...current.stageTimerNotices,
+            [stageId]: {
+              twoMinutes: current.stageTimerNotices[stageId]?.twoMinutes ?? false,
+              timeUp: current.stageTimerNotices[stageId]?.timeUp ?? false,
+              [notice]: true,
+            },
+          },
           updatedAt: new Date().toISOString(),
         })),
       markStageComplete: (stageId, stageIndex, totalStages) =>

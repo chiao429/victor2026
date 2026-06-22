@@ -132,6 +132,11 @@ export interface ActivityProgress {
   completedStageIds: string[];
   answers: Record<string, string>;
   uploadedFiles: Record<string, UploadedFileInfo>;
+  stageTimerStartedAt: Record<string, string>;
+  stageTimerNotices: Record<string, {
+    twoMinutes: boolean;
+    timeUp: boolean;
+  }>;
   updatedAt: string;
   started: boolean;
   finished: boolean;

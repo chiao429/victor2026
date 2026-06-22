@@ -11,7 +11,7 @@ const activity = activityData as ActivityConfig;
 export function StageIntroPage() {
   const { stageId } = useParams();
   const navigate = useNavigate();
-  const { progress, setPosition } = useActivityProgress();
+  const { progress, setPosition, startStageTimer } = useActivityProgress();
   const stageIndex = activity.stages.findIndex((stage) => stage.id === stageId);
   const stage = activity.stages[stageIndex];
   if (!stage) return <ErrorPage message="找不到這個關卡。" />;
@@ -31,7 +31,11 @@ export function StageIntroPage() {
       </div>
       <BottomActions>
         <button className="button button-ghost compact" onClick={() => navigate('/stages')}>← 關卡總覽</button>
-        <button className="button button-primary" onClick={() => { setPosition(stageIndex, 0, stage.id); navigate(`/stages/${stage.id}/steps/0`); }}>
+        <button className="button button-primary" onClick={() => {
+          if (progress.role === 'leader') startStageTimer(stage.id);
+          setPosition(stageIndex, 0, stage.id);
+          navigate(`/stages/${stage.id}/steps/0`);
+        }}>
           我們到了，開始關卡 <span>→</span>
         </button>
       </BottomActions>
