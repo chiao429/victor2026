@@ -9,7 +9,7 @@ export function CharacterCard({ card }: { card: CharacterCardData }) {
       <div className="character-card-header">
         <div className="character-avatar" aria-hidden="true">?</div>
         <div>
-          <h2 id="character-card-title">我的評分卡</h2>
+          <h2 id="character-card-title">少年的評分卡</h2>
           <p className="character-total">總分 <strong>{totalScore}</strong> / {maximumScore}</p>
         </div>
       </div>

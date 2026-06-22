@@ -12,8 +12,8 @@ import { createInitialProgress, loadProgress, STORAGE_KEY } from '../utils/progr
 
 interface ProgressContextValue {
   progress: ActivityProgress;
-  start: () => void;
   setRole: (role: 'leader' | 'member') => void;
+  setTeam: (group: '眾教會' | 'PPC', teamName: string) => void;
   setPosition: (stageIndex: number, stepIndex: number, stageId: string) => void;
   saveAnswer: (key: string, value: string) => void;
   saveUpload: (key: string, value: UploadedFileInfo) => void;
@@ -37,8 +37,12 @@ export function ActivityProgressProvider({ children }: { children: ReactNode }) 
   const value = useMemo<ProgressContextValue>(
     () => ({
       progress,
-      start: () => patch({ started: true }),
-      setRole: (role) => patch({ role, started: true }),
+      setRole: (role) => patch({
+        role,
+        started: true,
+        ...(role === 'member' ? { teamGroup: null, teamName: '' } : {}),
+      }),
+      setTeam: (teamGroup, teamName) => patch({ teamGroup, teamName }),
       setPosition: (currentStageIndex, currentStepIndex, stageId) =>
         setProgress((current) => {
           return {

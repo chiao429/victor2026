@@ -34,6 +34,15 @@ export interface StageStep {
   taskNumber?: number;
   content?: string;
   leaderScript?: string;
+  leaderPanelTitle?: string;
+  ratingCard?: {
+    title: string;
+    instruction: string;
+    scale: string;
+    items: string[];
+  };
+  transitionNumber?: string;
+  transitionLabel?: string;
   imageUrl?: string;
   videoUrl?: string;
   question?: string;
@@ -59,6 +68,7 @@ export interface StageStep {
     prompt: string;
     example?: string;
   }[];
+  hideInput?: boolean;
   statements?: string[];
   scriptureCards?: {
     reference: string;
@@ -93,6 +103,10 @@ export interface ActivityConfig {
   intro: string;
   storyTitle: string;
   storyParagraphs: string[];
+  diaryEntries: {
+    date: string;
+    paragraphs: string[];
+  }[];
   instructions: string[];
   leaderNotes: string[];
   cautions: string[];
@@ -110,6 +124,8 @@ export interface UploadedFileInfo {
 
 export interface ActivityProgress {
   role: 'leader' | 'member' | null;
+  teamGroup: '眾教會' | 'PPC' | null;
+  teamName: string;
   currentStageIndex: number;
   currentStepIndex: number;
   visitedStageIds: string[];

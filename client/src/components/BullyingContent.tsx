@@ -2,10 +2,12 @@ import type { StageStep } from '../types/activity';
 
 function LeaderPanel({ text }: { text: string }) {
   return (
-    <aside className="bullying-leader-panel">
-      <strong>小隊長指引</strong>
-      {text.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-    </aside>
+    <details className="bullying-leader-panel leader-script-collapsible" open>
+      <summary>小隊長指引</summary>
+      <div>
+        {text.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      </div>
+    </details>
   );
 }
 
@@ -18,6 +20,12 @@ export function BullyingScenario({ step, isLeader }: { step: StageStep; isLeader
           <span>沒用</span>
           <span>怪人</span>
           <span>不要理他</span>
+          <span>很噁心</span>
+          <span>都沒人喜歡你</span>
+          <span>笑死人</span>
+          <span>離我們遠一點</span>
+          <span>你很奇怪</span>
+          <span>不要跟他一組</span>
           <div className="empty-chair">CHAIR</div>
         </div>
         <span className="panel-label">隊員閱讀 · 故事情境</span>

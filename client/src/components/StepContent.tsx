@@ -45,10 +45,31 @@ export function StepContent({
         {step.type === 'photo-upload' ? '▣' : step.type === 'discussion' ? '◌' : '✦'}
       </div>
       <h1>{!isLeader && step.memberTitle ? step.memberTitle : step.title}</h1>
+      {isLeader && step.leaderScript && ![
+        'notebook-intro',
+        'notebook-writing',
+        'bullying-scenario',
+        'chair-experience',
+        'values-discussion',
+        'line-activity-intro',
+        'line-statements',
+        'line-reflection',
+        'faith-sharing',
+        'scripture-encouragement',
+      ].includes(step.type) && (
+        <details className="leader-script leader-script-collapsible" open>
+          <summary>{step.leaderPanelTitle ?? '小隊長指引'}</summary>
+          <div>
+            {step.leaderScript.split('\n\n').map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </details>
+      )}
       {step.type === 'task-transition' && <TaskTransition step={step} />}
       {step.type === 'real-profile' && <RealProfile step={step} />}
       {step.type === 'reveal-story' && <RevealStory step={step} />}
-      {step.type === 'writing-prompt' && <WritingPrompt step={step} isLeader={isLeader} />}
+      {step.type === 'writing-prompt' && <WritingPrompt step={step} />}
       {step.type === 'guided-discussion' && <GuidedDiscussion step={step} />}
       {step.type === 'notebook-intro' && <NotebookIntro step={step} isLeader={isLeader} />}
       {step.type === 'notebook-messages' && <NotebookMessages step={step} />}
@@ -68,7 +89,7 @@ export function StepContent({
       {step.type === 'line-reflection' && <LineReflection step={step} isLeader={isLeader} />}
       {step.type === 'faith-sharing' && <FaithSharing step={step} isLeader={isLeader} />}
       {step.type === 'scripture-encouragement' && <ScriptureEncouragement step={step} isLeader={isLeader} />}
-      {step.content && ![
+      {step.content && !step.ratingCard && ![
         'task-transition',
         'reveal-story',
         'writing-prompt',
@@ -83,6 +104,30 @@ export function StepContent({
       ].includes(step.type) && (
         <p className="prose step-copy">{step.content}</p>
       )}
+      {step.ratingCard && (
+        <section className="rating-prompt-card" aria-labelledby={`rating-card-${step.id}`}>
+          <header>
+            <div>
+              <span>SELF RATING</span>
+              <h2 id={`rating-card-${step.id}`}>{step.ratingCard.title}</h2>
+            </div>
+            <strong>{step.ratingCard.scale}</strong>
+          </header>
+          <p>{step.ratingCard.instruction}</p>
+          <div className="rating-prompt-heading">
+            <span>評分項目</span>
+            <span>{step.ratingCard.scale}</span>
+          </div>
+          <ol>
+            {step.ratingCard.items.map((item) => (
+              <li key={item}>
+                <span>{item}</span>
+                <span aria-hidden="true">＿＿</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
       {step.type === 'character-card' && characterCard && <CharacterCard card={characterCard} />}
       {step.imageUrl && <img className="story-image" src={step.imageUrl} alt="" />}
       {step.videoUrl && (
@@ -91,25 +136,10 @@ export function StepContent({
         </video>
       )}
       {step.question && <h2 className="question">{step.question}</h2>}
-      {isLeader && step.leaderScript && ![
-        'writing-prompt',
-        'notebook-intro',
-        'notebook-writing',
-        'bullying-scenario',
-        'chair-experience',
-        'values-discussion',
-        'line-activity-intro',
-        'line-statements',
-        'line-reflection',
-        'faith-sharing',
-        'scripture-encouragement',
-      ].includes(step.type) && (
-        <aside className="leader-script">
-          <strong>小隊長請說</strong>
-          {step.leaderScript.split('\n\n').map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </aside>
+      {step.content && step.ratingCard && (
+        <section className="rating-reflection">
+          <p className="prose step-copy">{step.content}</p>
+        </section>
       )}
       {step.type === 'text-input' && (
         <textarea

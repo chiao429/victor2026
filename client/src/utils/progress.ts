@@ -4,6 +4,8 @@ export const STORAGE_KEY = 'victor-2026-activity-progress';
 
 export const createInitialProgress = (): ActivityProgress => ({
   role: null,
+  teamGroup: null,
+  teamName: '',
   currentStageIndex: 0,
   currentStepIndex: 0,
   visitedStageIds: [],
@@ -31,10 +33,17 @@ export function loadProgress(storage: Pick<Storage, 'getItem'> = localStorage): 
     ) {
       return createInitialProgress();
     }
+    const role = parsed.role === 'leader' || parsed.role === 'member' ? parsed.role : null;
+    const teamGroup = parsed.teamGroup === '眾教會' || parsed.teamGroup === 'PPC'
+      ? parsed.teamGroup
+      : null;
     return {
       ...createInitialProgress(),
       ...parsed,
-      role: parsed.role === 'leader' || parsed.role === 'member' ? parsed.role : null,
+      role,
+      teamGroup,
+      teamName: typeof parsed.teamName === 'string' ? parsed.teamName : '',
+      started: role ? Boolean(parsed.started) : false,
       visitedStageIds: Array.isArray(parsed.visitedStageIds)
         ? parsed.visitedStageIds
         : parsed.completedStageIds,
@@ -77,7 +86,8 @@ export function completeStage(
 
 export function resumePath(progress: ActivityProgress, stages: Stage[]): string {
   if (!progress.started) return '/story';
-  if (!progress.role) return '/identity';
+  if (!progress.role) return '/story';
+  if (progress.role === 'leader' && (!progress.teamGroup || !progress.teamName)) return '/instructions';
   if (progress.finished && progress.completedStageIds.length === stages.length) return '/complete';
   return '/stages';
 }

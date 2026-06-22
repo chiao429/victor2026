@@ -22,19 +22,19 @@ describe('activity progress', () => {
     expect(resumePath(progress, activity.stages)).toBe('/stages');
   });
 
-  it('returns to identity selection when no role has been chosen', () => {
+  it('does not count progress before a role has been chosen', () => {
     const progress = { ...createInitialProgress(), started: true };
-    expect(resumePath(progress, activity.stages)).toBe('/identity');
+    expect(resumePath(progress, activity.stages)).toBe('/story');
   });
 
-  it('requires a stored answer for a required notebook writing step', () => {
+  it('requires a stored answer for a required confirmation step', () => {
     const stage = activity.stages.find((item) =>
-      item.steps.some((step) => step.type === 'notebook-writing' && step.required),
+      item.steps.some((step) => step.type === 'confirmation' && step.required),
     )!;
-    const step = stage.steps.find((item) => item.type === 'notebook-writing' && item.required)!;
+    const step = stage.steps.find((item) => item.type === 'confirmation' && item.required)!;
     const progress = createInitialProgress();
     expect(canCompleteStep(step, stage.id, progress)).toBe(false);
-    progress.answers[answerKey(stage.id, step.id)] = '我們很會互相傾聽';
+    progress.answers[answerKey(stage.id, step.id)] = 'confirmed';
     expect(canCompleteStep(step, stage.id, progress)).toBe(true);
   });
 });

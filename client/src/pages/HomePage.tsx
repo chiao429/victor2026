@@ -3,19 +3,19 @@ import activityData from '../data/activity.json';
 import type { ActivityConfig } from '../types/activity';
 import { useActivityProgress } from '../hooks/useActivityProgress';
 import { resumePath } from '../utils/progress';
-import { BottomActions, Layout } from '../components/Layout';
+import { Layout } from '../components/Layout';
 
 const activity = activityData as ActivityConfig;
 
 export function HomePage() {
   const navigate = useNavigate();
   const { progress, reset } = useActivityProgress();
-  const hasProgress = progress.started || progress.completedStageIds.length > 0;
+  const hasProgress = Boolean(progress.role);
 
   const restart = () => {
     if (window.confirm('確定要清除目前進度並重新開始嗎？此動作無法復原。')) {
       reset();
-      navigate('/story');
+      navigate('/');
     }
   };
 
@@ -35,12 +35,12 @@ export function HomePage() {
         <p className="subtitle">{activity.subtitle}</p>
         <p className="intro">{activity.intro}</p>
       </section>
-      <BottomActions>
+      <div className="home-actions">
         <button className="button button-primary" onClick={() => navigate(hasProgress ? resumePath(progress, activity.stages) : '/story')}>
           {hasProgress ? '繼續體驗' : '開始體驗'} <span>→</span>
         </button>
         {hasProgress && <button className="button button-ghost" onClick={restart}>重新開始</button>}
-      </BottomActions>
+      </div>
     </Layout>
   );
 }

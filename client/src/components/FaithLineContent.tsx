@@ -3,10 +3,12 @@ import type { StageStep } from '../types/activity';
 
 function FaithLeaderPanel({ text }: { text: string }) {
   return (
-    <aside className="faith-leader-panel">
-      <strong>小隊長指引</strong>
-      {text.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-    </aside>
+    <details className="faith-leader-panel leader-script-collapsible" open>
+      <summary>小隊長指引</summary>
+      <div>
+        {text.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      </div>
+    </details>
   );
 }
 

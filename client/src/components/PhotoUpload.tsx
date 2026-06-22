@@ -53,7 +53,7 @@ export function PhotoUpload({
       ) : (
         <button className="upload-picker" type="button" onClick={() => inputRef.current?.click()}>
           <span aria-hidden="true">＋</span>
-          拍照或選擇照片
+          選擇照片
         </button>
       )}
       <input
@@ -61,7 +61,6 @@ export function PhotoUpload({
         className="visually-hidden"
         type="file"
         accept={ALLOWED.join(',')}
-        capture="environment"
         onChange={(event) => choose(event.target.files?.[0])}
       />
       {file && (
@@ -71,7 +70,7 @@ export function PhotoUpload({
           </button>
         </div>
       )}
-      <p className="upload-notice">照片只會在這台裝置上預覽，不會上傳或保存。</p>
+      <p className="upload-notice">上傳完照片才能完成關卡。</p>
       {(file || uploaded) && (
         <p className="success-message">
           ✓ 已選擇照片{file?.name ?? uploaded?.fileName ? `：${file?.name ?? uploaded?.fileName}` : ''}

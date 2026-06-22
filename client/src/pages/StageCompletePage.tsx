@@ -33,14 +33,25 @@ export function StageCompletePage() {
     <Layout eyebrow="CHAPTER COMPLETE · 關卡完成" progress={visitedProgress(progress, activity.stages.length)}>
       <div className="completion-mark">✓</div>
       <h1 className="display-title">{stage.title}<br />已完成</h1>
+      {progress.role === 'leader' && stage.id === 'love-my-home' && (
+        <details className="leader-script leader-script-collapsible" open>
+          <summary>小隊長指引</summary>
+          <div>
+            <p>請用塑膠袋帶走成品，勿留在教室中。</p>
+          </div>
+        </details>
+      )}
       <blockquote className="summary-quote">{stage.summary}</blockquote>
       <p className="lead">
         {allStagesComplete
           ? '所有頁面都已走完，帶著你們的答案前往結尾。'
-          : `目前已完成 ${completedAfterThisStage} / ${activity.stages.length} 關，接下來由你們決定要去哪裡。`}
+          : `目前已完成 ${completedAfterThisStage} / ${activity.stages.length} 關，請繼續下一關。`}
       </p>
       <BottomActions>
-        <button className="button button-primary" onClick={() => navigate(allStagesComplete ? '/complete' : '/stages')}>
+        <button
+          className="button button-primary"
+          onClick={() => navigate(allStagesComplete ? '/complete' : '/stages')}
+        >
           {allStagesComplete ? '前往活動結尾' : '回到關卡總覽'} <span>→</span>
         </button>
       </BottomActions>

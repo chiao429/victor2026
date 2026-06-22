@@ -37,6 +37,6 @@ describe('StepContent role visibility', () => {
     const view = renderStep(false);
     expect(view.getByText('所有人都能看到的內容')).toBeInTheDocument();
     expect(view.queryByText('只有小隊長能看到的提示')).not.toBeInTheDocument();
-    expect(view.queryByText('小隊長請說')).not.toBeInTheDocument();
+    expect(view.queryByText('小隊長指引')).not.toBeInTheDocument();
   });
 });

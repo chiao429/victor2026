@@ -3,8 +3,8 @@ import type { StageStep } from '../types/activity';
 export function TaskTransition({ step }: { step: StageStep }) {
   return (
     <div className="task-transition-card">
-      <span className="task-transition-number">02</span>
-      <p className="task-transition-label">MISSION TWO · 任務二</p>
+      <span className="task-transition-number">{step.transitionNumber ?? '02'}</span>
+      <p className="task-transition-label">{step.transitionLabel ?? 'MISSION TWO · 任務二'}</p>
       <div className="task-transition-copy">
         {step.content?.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       </div>
@@ -54,19 +54,12 @@ export function RevealStory({ step }: { step: StageStep }) {
   );
 }
 
-export function WritingPrompt({ step, isLeader }: { step: StageStep; isLeader: boolean }) {
+export function WritingPrompt({ step }: { step: StageStep }) {
   return (
-    <>
-      {isLeader && step.leaderScript && (
-        <div className="writing-instruction">
-          {step.leaderScript.split('\n').map((line) => <p key={line}>{line}</p>)}
-        </div>
-      )}
-      <div className="example-list">
-        <strong>可以從這幾種角度寫：</strong>
-        {step.examples?.map((example) => <p key={example}>{example}</p>)}
-      </div>
-    </>
+    <div className="example-list">
+      <strong>可以從這幾種角度寫：</strong>
+      {step.examples?.map((example) => <p key={example}>{example}</p>)}
+    </div>
   );
 }
 

@@ -4,10 +4,12 @@ export function NotebookIntro({ step, isLeader }: { step: StageStep; isLeader: b
   return (
     <>
       {isLeader && step.leaderScript && (
-        <aside className="notebook-leader-panel">
-          <strong>小隊長指引</strong>
-          {step.leaderScript.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-        </aside>
+        <details className="notebook-leader-panel leader-script-collapsible" open>
+          <summary>小隊長指引</summary>
+          <div>
+            {step.leaderScript.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+        </details>
       )}
       <section className="notebook-reader-panel">
         <span>隊員閱讀</span>
@@ -51,10 +53,10 @@ export function NotebookWriting({
   return (
     <>
       {isLeader && step.leaderScript && (
-        <aside className="notebook-leader-panel compact-panel">
-          <strong>小隊長指引</strong>
-          <p>{step.leaderScript}</p>
-        </aside>
+        <details className="notebook-leader-panel compact-panel leader-script-collapsible" open>
+          <summary>小隊長指引</summary>
+          <div><p>{step.leaderScript}</p></div>
+        </details>
       )}
       <section className="notebook-reader-panel writing-panel">
         <span>隊員留言</span>
@@ -68,14 +70,16 @@ export function NotebookWriting({
             </div>
           ))}
         </div>
-        <textarea
-          className="text-input notebook-textarea"
-          rows={6}
-          maxLength={800}
-          value={value}
-          placeholder={step.placeholder}
-          onChange={(event) => onChange(event.target.value)}
-        />
+        {!step.hideInput && (
+          <textarea
+            className="text-input notebook-textarea"
+            rows={6}
+            maxLength={800}
+            value={value}
+            placeholder={step.placeholder}
+            onChange={(event) => onChange(event.target.value)}
+          />
+        )}
       </section>
       <p className="notebook-closing">也許下一個翻開這本筆記本的人，會被你留下的文字所幫助。</p>
     </>
