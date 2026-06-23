@@ -317,6 +317,24 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 .diary-entry-copy { flex: 1; }
 .diary-entry-copy p { white-space: pre-line; }
+.reader-letter-page {
+  min-height: 610px;
+}
+.reader-letter-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 480px;
+  padding: 24px 0 52px;
+}
+.reader-letter-copy p {
+  white-space: pre-line;
+}
+.reader-letter-copy .reader-letter-salutation {
+  margin-bottom: 42px;
+  color: var(--red-dark);
+  font-weight: 700;
+}
 .diary-entry footer {
   align-self: flex-end;
   margin-top: 18px;
@@ -328,20 +346,29 @@ button { -webkit-tap-highlight-color: transparent; }
 .diary-pagination {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 4px;
+  gap: 2px;
+  margin: 4px 0 16px;
 }
 .diary-pagination button {
-  width: 8px;
-  height: 8px;
+  display: grid;
+  width: 24px;
+  height: 24px;
   padding: 0;
   border: 0;
-  border-radius: 50%;
-  background: rgba(167, 67, 53, 0.23);
+  place-items: center;
+  background: transparent;
   cursor: pointer;
 }
-.diary-pagination button.active {
+.diary-pagination button::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(167, 67, 53, 0.23);
+  content: '';
+}
+.diary-pagination button.active::before {
   width: 24px;
+  height: 8px;
   border-radius: 10px;
   background: var(--red);
 }
@@ -715,6 +742,45 @@ button { -webkit-tap-highlight-color: transparent; }
 .rating-reflection .prose { margin: 0; }
 .question { margin: 26px 0 16px; font-family: 'Noto Serif TC', serif; font-size: 22px; line-height: 1.55; }
 
+.content-section-list {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.content-section-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid rgba(65, 53, 42, 0.16);
+  background: #fffaf0;
+  box-shadow: 4px 7px 18px rgba(69, 58, 45, 0.08);
+}
+
+.content-section-index {
+  color: var(--red);
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.content-section-card h2 {
+  margin: 0 0 10px;
+  color: var(--green);
+  font-family: 'Noto Serif TC', serif;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.content-section-card p {
+  margin: 0;
+  color: #514a42;
+  font-size: 17px;
+  line-height: 1.85;
+}
+
 .task-transition-card { position: relative; min-height: 360px; overflow: hidden; margin-top: 24px; padding: 34px 26px; color: #f7efe2; background: var(--green); box-shadow: 5px 8px 20px rgba(43, 38, 31, 0.18); }
 .task-transition-card::after { position: absolute; right: -24px; bottom: -65px; width: 190px; height: 190px; content: ''; border: 1px solid rgba(247, 239, 226, 0.18); border-radius: 50%; box-shadow: 0 0 0 28px rgba(247, 239, 226, 0.04), 0 0 0 58px rgba(247, 239, 226, 0.03); }
 .task-transition-number { display: block; color: rgba(247, 239, 226, 0.14); font-family: Georgia, serif; font-size: 112px; font-weight: 800; line-height: 0.8; }
@@ -785,7 +851,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .notebook-options p { margin: 0; color: var(--ink); font-weight: 700; line-height: 1.55; }
 .notebook-options small { margin-top: 5px; color: var(--muted); line-height: 1.5; }
 .notebook-textarea { margin-top: 20px; background: #fffdf7; }
-.notebook-closing { margin: 20px 0 0; padding: 18px 20px; color: #f8e3d5; background: var(--red-dark); font-family: 'Noto Serif TC', serif; font-size: 16px; line-height: 1.75; text-align: center; }
+.notebook-closing { margin: 20px 0 0; padding: 18px 20px; color: #f8e3d5; background: var(--red-dark); font-family: 'Noto Serif TC', serif; font-size: 16px; line-height: 1.75; text-align: center; white-space: pre-line; }
 
 .bullying-leader-panel { margin-top: 22px; padding: 22px 20px; color: #f8f1e5; border-left: 5px solid #d7aa8e; background: #70483f; }
 .bullying-leader-panel > strong { display: block; margin-bottom: 11px; color: #f2cbb5; font-size: 12px; letter-spacing: 0.12em; }

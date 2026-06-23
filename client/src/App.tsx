@@ -10,6 +10,7 @@ import { CompletePage } from './pages/CompletePage';
 import { ErrorPage } from './pages/ErrorPage';
 import { StageSelectPage } from './pages/StageSelectPage';
 import { IdentityPage } from './pages/IdentityPage';
+import { ReaderLetterPage } from './pages/ReaderLetterPage';
 import { RequireIdentity } from './components/RequireIdentity';
 import { RequireTeam } from './components/RequireTeam';
 
@@ -20,6 +21,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/story" element={<StoryPage />} />
+          <Route path="/reader-letter" element={<ReaderLetterPage />} />
           <Route path="/identity" element={<IdentityPage />} />
           <Route element={<RequireIdentity />}>
             <Route path="/instructions" element={<InstructionsPage />} />

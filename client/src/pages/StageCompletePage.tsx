@@ -29,15 +29,20 @@ export function StageCompletePage() {
 
   if (!stage) return <ErrorPage message="找不到這個關卡。" />;
 
+  const leaderScript = stage.completionLeaderScript
+    ?? (stage.id === 'love-my-home' ? '請用塑膠袋帶走成品，勿留在教室中。' : undefined);
+
   return (
     <Layout eyebrow="CHAPTER COMPLETE · 關卡完成" progress={visitedProgress(progress, activity.stages.length)}>
       <div className="completion-mark">✓</div>
       <h1 className="display-title">{stage.title}<br />已完成</h1>
-      {progress.role === 'leader' && stage.id === 'love-my-home' && (
+      {progress.role === 'leader' && leaderScript && (
         <details className="leader-script leader-script-collapsible" open>
           <summary>小隊長指引</summary>
           <div>
-            <p>請用塑膠袋帶走成品，勿留在教室中。</p>
+            {leaderScript.split('\n\n').map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
         </details>
       )}

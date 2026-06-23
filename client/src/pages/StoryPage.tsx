@@ -9,8 +9,20 @@ const activity = activityData as ActivityConfig;
 export function StoryPage() {
   const navigate = useNavigate();
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const currentEntryRef = useRef(0);
   const [currentEntry, setCurrentEntry] = useState(0);
   const lastEntry = activity.diaryEntries.length - 1;
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const setVisibleEntry = (index: number) => {
+    if (index === currentEntryRef.current) return;
+    currentEntryRef.current = index;
+    setCurrentEntry(index);
+    scrollToTop();
+  };
 
   const goToEntry = (index: number) => {
     const nextIndex = Math.max(0, Math.min(index, lastEntry));
@@ -18,13 +30,13 @@ export function StoryPage() {
     if (!scroller) return;
     const page = scroller.querySelector<HTMLElement>(`[data-entry-index="${nextIndex}"]`);
     scroller.scrollTo({ left: page?.offsetLeft ?? 0, behavior: 'smooth' });
-    setCurrentEntry(nextIndex);
+    setVisibleEntry(nextIndex);
   };
 
   const updateCurrentEntry = (event: UIEvent<HTMLDivElement>) => {
     const scroller = event.currentTarget;
     const pageWidth = scroller.scrollWidth / activity.diaryEntries.length;
-    setCurrentEntry(Math.max(0, Math.min(Math.round(scroller.scrollLeft / pageWidth), lastEntry)));
+    setVisibleEntry(Math.max(0, Math.min(Math.round(scroller.scrollLeft / pageWidth), lastEntry)));
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -107,7 +119,7 @@ export function StoryPage() {
             <button className="button button-ghost" onClick={() => navigate('/')}>
               重新開始
             </button>
-            <button className="button button-primary" onClick={() => navigate('/identity')}>
+            <button className="button button-primary" onClick={() => navigate('/reader-letter')}>
               開始闖關 <span>→</span>
             </button>
           </div>

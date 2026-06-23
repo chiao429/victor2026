@@ -89,6 +89,19 @@ export function StepContent({
       {step.type === 'line-reflection' && <LineReflection step={step} isLeader={isLeader} />}
       {step.type === 'faith-sharing' && <FaithSharing step={step} isLeader={isLeader} />}
       {step.type === 'scripture-encouragement' && <ScriptureEncouragement step={step} isLeader={isLeader} />}
+      {step.contentSections && (
+        <div className="content-section-list">
+          {step.contentSections.map((section, index) => (
+            <section className="content-section-card" key={section.title}>
+              <span className="content-section-index">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h2>{section.title}</h2>
+                <p>{section.body}</p>
+              </div>
+            </section>
+          ))}
+        </div>
+      )}
       {step.content && !step.ratingCard && ![
         'task-transition',
         'reveal-story',

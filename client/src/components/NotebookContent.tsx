@@ -81,7 +81,7 @@ export function NotebookWriting({
           />
         )}
       </section>
-      <p className="notebook-closing">也許下一個翻開這本筆記本的人，會被你留下的文字所幫助。</p>
+      <p className="notebook-closing">{'也許會有人針對你的迷惘給你鼓勵，\n也或許下一個翻開這本筆記本的人，\n會被你留下的文字所幫助。'}</p>
     </>
   );
 }

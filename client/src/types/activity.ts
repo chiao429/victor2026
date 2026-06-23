@@ -33,6 +33,10 @@ export interface StageStep {
   memberTitle?: string;
   taskNumber?: number;
   content?: string;
+  contentSections?: {
+    title: string;
+    body: string;
+  }[];
   leaderScript?: string;
   leaderPanelTitle?: string;
   ratingCard?: {
@@ -85,6 +89,7 @@ export interface Stage {
   durationMinutes: number;
   mapImageUrl: string;
   summary: string;
+  completionLeaderScript?: string;
   characterCard?: CharacterCardData;
   steps: StageStep[];
 }
@@ -107,6 +112,11 @@ export interface ActivityConfig {
     date: string;
     paragraphs: string[];
   }[];
+  readerLetter: {
+    dateTime: string;
+    salutation: string;
+    lines: string[];
+  };
   instructions: string[];
   leaderNotes: string[];
   cautions: string[];
