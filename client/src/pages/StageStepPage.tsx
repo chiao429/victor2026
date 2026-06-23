@@ -31,6 +31,7 @@ export function StageStepPage() {
     : undefined;
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
     setShowValidation(false);
     if (stage && step) {
       setPosition(stageIndex, stepIndex, stage.id);
