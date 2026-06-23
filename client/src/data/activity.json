@@ -90,8 +90,8 @@
       "title": "我不是資料",
       "description": "少年發現自己常被成績、排名和標籤描述，卻很少有人問他真正喜歡什麼。",
       "location": "圖書館外側長廊",
-      "durationMinutes": 12,
-      "mapImageUrl": "/maps/library.svg",
+      "durationMinutes": 15,
+      "mapImageUrl": "/images/stages/not-data.webp",
       "summary": "數字能描述一部分的我們，但不能定義完整的我們。",
       "completionLeaderScript": "藉由這個過程，我們會知道，這個世界會試圖用很多不同的標準來定義我們，給我們打分數，認為我們的程度、階層應該在哪裡。然而，我們必須要知道，我們每個人都不是一組Deta，不是一份資料，我們都是真真實實的人。\n\n即便我們的外在、出生背景，有時容易被打上「比較不好」、「比較差」的分數，但我們的價值是無法用這些分數來定義的，我們的內心、我們的努力，也都是直得被看見的。",
       "characterCard": {
@@ -261,7 +261,7 @@
       "description": "有些關心很安靜，安靜到我們常把它當成理所當然。",
       "location": "榕樹下休憩區",
       "durationMinutes": 15,
-      "mapImageUrl": "/maps/banyan.svg",
+      "mapImageUrl": "/images/stages/love-my-home.webp",
       "summary": "家不一定完美，但那些微小的照顧，值得被重新看見。",
       "steps": [
         {
@@ -299,11 +299,11 @@
     },
     {
       "id": "if-it-were-me",
-      "title": "如果換成是我",
+      "title": "我只是沒有說話",
       "description": "當一個人被貼上標籤、孤立與霸凌，我們要沉默保護自己，還是選擇成為願意靠近的人？",
       "location": "霸凌情境教室",
       "durationMinutes": 15,
-      "mapImageUrl": "/maps/classroom.svg",
+      "mapImageUrl": "/images/stages/if-it-were-me.webp",
       "summary": "真正的勇敢，不一定是獨自對抗所有人，而是願意看見、陪伴，並找到安全的方法一起求助。",
       "steps": [
         {
@@ -357,7 +357,7 @@
       "description": "當外表、目光與比較讓人找不到自己，試著從神的屬性與作為，重新看見人的價值。",
       "location": "信心體驗活動區",
       "durationMinutes": 15,
-      "mapImageUrl": "/maps/faith-line.svg",
+      "mapImageUrl": "/images/stages/seen-by-the-father.webp",
       "summary": "人的價值不由外表、讚數或他人的評語決定；在天父眼中，每個人都被看見、被認識，也值得被愛。",
       "steps": [
         {
@@ -437,11 +437,11 @@
     },
     {
       "id": "future-message",
-      "title": "迷惘少年",
+      "title": "給還在找方向的人",
       "description": "一本遺落的筆記本，收著那些迷惘過的人留下的話，也收著陌生人溫柔的回應。",
       "location": "操場看台入口",
-      "durationMinutes": 12,
-      "mapImageUrl": "/maps/track.svg",
+      "durationMinutes": 15,
+      "mapImageUrl": "/images/stages/future-message.webp",
       "summary": "不必保證成為誰，只要記得今天曾經認真聽見自己。",
       "steps": [
         {

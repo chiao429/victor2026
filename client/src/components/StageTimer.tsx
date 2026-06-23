@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import type { Stage } from '../types/activity';
 import { useActivityProgress } from '../hooks/useActivityProgress';
 
+const DEFAULT_STAGE_COUNTDOWN_MINUTES = 15;
+
 export function StageTimer({ stage }: { stage: Stage }) {
   const { progress, dismissStageTimerNotice } = useActivityProgress();
   const startedAt = progress.stageTimerStartedAt[stage.id];
@@ -15,7 +17,7 @@ export function StageTimer({ stage }: { stage: Stage }) {
 
   if (progress.role !== 'leader' || !startedAt) return null;
 
-  const durationSeconds = stage.durationMinutes * 60;
+  const durationSeconds = DEFAULT_STAGE_COUNTDOWN_MINUTES * 60;
   const elapsedSeconds = Math.floor((now - new Date(startedAt).getTime()) / 1000);
   const remainingSeconds = Math.max(0, durationSeconds - elapsedSeconds);
   const minutes = Math.floor(remainingSeconds / 60);

@@ -48,7 +48,7 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .topbar {
   position: relative;
-  z-index: 1;
+  z-index: 130;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -86,6 +86,177 @@ button { -webkit-tap-highlight-color: transparent; }
 .topbar p, .topbar small { margin: 0; line-height: 1.15; }
 .topbar p { font-size: 11px; font-weight: 800; letter-spacing: 0.14em; }
 .topbar small { color: var(--muted); font-family: 'Noto Serif TC', serif; }
+.map-icon-button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  padding: 0;
+  place-items: center;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 250, 240, 0.72);
+  box-shadow: 2px 4px 12px rgba(65, 54, 41, 0.08);
+}
+.map-icon-button svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+.map-icon-button:focus-visible, .map-close-button:focus-visible, .map-nav:focus-visible, .map-floor-buttons button:focus-visible {
+  outline: 3px solid rgba(167, 67, 53, 0.24);
+  outline-offset: 3px;
+}
+.map-modal-backdrop {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  padding: 18px;
+  place-items: center;
+  background: rgba(25, 23, 20, 0.64);
+  backdrop-filter: blur(4px);
+}
+.map-modal {
+  width: min(100%, 476px);
+  max-height: min(86dvh, 760px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 250, 240, 0.38);
+  background: var(--paper);
+  box-shadow: 0 24px 70px rgba(20, 17, 14, 0.38);
+}
+.map-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.map-modal-header span {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+.map-modal-header h2 {
+  margin: 5px 0 0;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 26px;
+  line-height: 1.25;
+}
+.map-close-button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  padding: 0;
+  place-items: center;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fffaf0;
+  font-size: 25px;
+  line-height: 1;
+}
+.map-legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px;
+  color: #514a42;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.map-legend img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+.map-warning {
+  margin: 0;
+  padding: 12px 20px;
+  color: var(--red);
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+.map-carousel {
+  position: relative;
+  display: grid;
+  min-height: 390px;
+  place-items: center;
+  overflow: hidden;
+  touch-action: pan-y;
+  background: #ede2cf;
+}
+.map-carousel > img {
+  display: block;
+  width: 100%;
+  max-height: min(58dvh, 520px);
+  object-fit: contain;
+  user-select: none;
+}
+.map-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  width: 38px;
+  height: 52px;
+  padding: 0;
+  place-items: center;
+  color: #fffaf0;
+  border: 1px solid rgba(255, 250, 240, 0.22);
+  background: rgba(47, 41, 35, 0.74);
+  font-size: 36px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+.map-nav.previous { left: 12px; }
+.map-nav.next { right: 12px; }
+.map-carousel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--line);
+}
+.map-carousel-footer strong {
+  color: var(--red);
+  font-family: Georgia, serif;
+  font-size: 20px;
+}
+.map-floor-buttons {
+  display: flex;
+  gap: 7px;
+}
+.map-floor-buttons button {
+  min-width: 44px;
+  height: 34px;
+  padding: 0 12px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fffaf0;
+  font-size: 13px;
+  font-weight: 800;
+}
+.map-floor-buttons button.active {
+  color: #fffaf0;
+  border-color: var(--red);
+  background: var(--red);
+}
 .progress-track { height: 4px; background: var(--paper-deep); }
 .progress-track span { display: block; height: 100%; background: var(--red); transition: width 280ms ease; }
 
@@ -517,6 +688,17 @@ button { -webkit-tap-highlight-color: transparent; }
 .password-toggle svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
 
 .stage-count, .step-meta { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.sequence-notice {
+  display: grid;
+  gap: 6px;
+  margin: 22px 0 18px;
+  padding: 16px 18px;
+  border-left: 5px solid var(--red);
+  background: #fffaf0;
+  box-shadow: 3px 5px 15px rgba(65, 54, 41, 0.08);
+}
+.sequence-notice strong { font-family: 'Noto Serif TC', serif; font-size: 18px; }
+.sequence-notice span { color: var(--muted); font-size: 14px; line-height: 1.6; }
 .stage-progress-summary { display: flex; justify-content: space-between; gap: 12px; margin: 24px 0 16px; color: var(--muted); font-size: 13px; font-weight: 800; }
 .stage-grid { display: grid; gap: 16px; }
 .stage-select-card {
@@ -557,6 +739,17 @@ button { -webkit-tap-highlight-color: transparent; }
 .stage-select-card.completed { border-color: rgba(83, 99, 75, 0.58); }
 .stage-select-card.completed .stage-card-status { color: #fffaf0; border-color: var(--green); background: var(--green); }
 .stage-select-card.completed .stage-card-status > span { color: #efc1ad; }
+.stage-select-card.locked {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+.stage-select-card.locked img { filter: grayscale(0.85); }
+.stage-select-card.locked .stage-card-status {
+  color: #7a7065;
+  border-color: rgba(65, 53, 42, 0.16);
+  background: #eee4d4;
+}
+.stage-select-card.locked .stage-card-status > span { color: #7a7065; }
 .stage-finish-button { width: 100%; margin-top: 20px; }
 .stage-restart-button { width: 100%; margin-top: 20px; }
 .character-card { margin-top: 28px; overflow: hidden; color: #f5eee0; border: 1px solid rgba(83, 99, 75, 0.58); background: #3f493b; box-shadow: 5px 8px 20px rgba(43, 38, 31, 0.18); }

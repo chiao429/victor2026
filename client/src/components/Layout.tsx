@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { LeaderMapButton } from './LeaderMapButton';
 
 export function Layout({
   children,
@@ -21,6 +22,7 @@ export function Layout({
             <small>少年日記</small>
           </div>
         </Link>
+        <LeaderMapButton />
       </header>
       {progress !== undefined && (
         <div className="progress-track" aria-label={`活動進度 ${Math.round(progress)}%`}>
