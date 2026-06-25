@@ -7,6 +7,7 @@ import { useActivityProgress } from '../hooks/useActivityProgress';
 import { visitedProgress } from '../utils/progress';
 import {
   canEnterSequencedStage,
+  isManualStageTeam,
   normalizeTeamName,
   parseStageLocationsCsv,
   parseStageSequenceCsv,
@@ -29,7 +30,7 @@ export function StageIntroPage() {
   const stage = activity.stages[stageIndex];
 
   useEffect(() => {
-    if (progress.role !== 'leader') {
+    if (!progress.teamName || isManualStageTeam(progress.teamName)) {
       setSequenceStatus('ready');
       return;
     }
@@ -54,22 +55,27 @@ export function StageIntroPage() {
     return () => {
       cancelled = true;
     };
-  }, [progress.role]);
+  }, [progress.teamName]);
 
   if (!stage) return <ErrorPage message="找不到這個體驗。" />;
-  const teamSequence = progress.role === 'leader'
+  const hasTeamSequence = Boolean(progress.teamName);
+  const usesManualSequence = isManualStageTeam(progress.teamName);
+  const teamSequence = hasTeamSequence
+    && !usesManualSequence
     ? stageSequences[normalizeTeamName(progress.teamName)] ?? null
     : null;
-  const stageLocation = progress.role === 'leader'
+  const stageLocation = hasTeamSequence
+    && !usesManualSequence
     ? stageLocations[normalizeTeamName(progress.teamName)]?.[stage.id] ?? null
     : null;
-  const stageIsLocked = progress.role === 'leader'
+  const stageIsLocked = hasTeamSequence
+    && !usesManualSequence
     && sequenceStatus === 'ready'
     && !canEnterSequencedStage(stage.id, teamSequence, progress.completedStageIds);
   if (sequenceStatus === 'error') {
     return <ErrorPage message="無法載入小隊體驗順序，請回到體驗總覽後再試一次。" />;
   }
-  if (progress.role === 'leader' && sequenceStatus === 'loading') {
+  if (hasTeamSequence && !usesManualSequence && sequenceStatus === 'loading') {
     return (
       <Layout eyebrow="LOADING · 載入中" progress={visitedProgress(progress, activity.stages.length)}>
         <h1 className="display-title">正在確認小隊順序</h1>
@@ -77,7 +83,7 @@ export function StageIntroPage() {
       </Layout>
     );
   }
-  if (stageIsLocked || (progress.role === 'leader' && !teamSequence)) {
+  if (stageIsLocked || (hasTeamSequence && !usesManualSequence && !teamSequence)) {
     return <ErrorPage message="這不是目前小隊開放的體驗，請依照指定順序前往。" />;
   }
 

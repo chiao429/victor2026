@@ -4,14 +4,19 @@ import activityData from '../data/activity.json';
 import type { ActivityConfig } from '../types/activity';
 import { BottomActions, Layout } from '../components/Layout';
 import { useActivityProgress } from '../hooks/useActivityProgress';
+import { MANUAL_STAGE_TEAM_NAME } from '../utils/stageSequence';
 
 const activity = activityData as ActivityConfig;
-const TEAM_OPTIONS = [
+const TEAM_OPTIONS_BASE = [
   '婉喻小隊', '品約小隊', '士榮小隊', '雅筑小隊', '迎家小隊', '沛希小隊',
   '熙蓁小隊', '劭祈小隊', '育家小隊', '恩宇小隊', '靖容小隊', '品翰小隊',
   '敬淳小隊', '海舒小隊', '靜安小隊', '祈恩小隊', '瀚森小隊', '以勒小隊',
   '冠暉小隊', '以諾小隊', '顗文小隊', '立禾小隊', '敬約小隊', '恩妮小隊',
   '迦叡小隊', '晨珍小隊', '榮恩小隊', '若圻小隊', '群恩小隊', '宸睿小隊',
+] as const;
+const LEADER_TEAM_OPTIONS = [
+  ...TEAM_OPTIONS_BASE,
+  MANUAL_STAGE_TEAM_NAME,
 ] as const;
 
 export function InstructionsPage() {
@@ -20,17 +25,14 @@ export function InstructionsPage() {
   const [teamName, setTeamName] = useState(progress.teamName);
   const [teamError, setTeamError] = useState('');
   const isLeader = progress.role === 'leader';
+  const teamOptions = isLeader ? LEADER_TEAM_OPTIONS : TEAM_OPTIONS_BASE;
   const visibleInstructions = isLeader
     ? activity.instructions
     : activity.instructions.filter((item) => !item.includes('小隊長'));
 
   const continueToStages = () => {
-    if (!isLeader) {
-      navigate('/stages');
-      return;
-    }
     const normalizedTeamName = teamName.trim();
-    if (!(TEAM_OPTIONS as readonly string[]).includes(normalizedTeamName)) {
+    if (!(teamOptions as readonly string[]).includes(normalizedTeamName)) {
       setTeamError('請從清單中選擇有效的小隊。');
       return;
     }
@@ -41,31 +43,29 @@ export function InstructionsPage() {
   return (
     <Layout eyebrow="BEFORE DEPARTURE · 出發前">
       <h1 className="display-title">準備出發</h1>
-      {isLeader && (
-        <section className="team-selector" aria-labelledby="team-selector-title">
-          <div className="section-heading">
-            <span>TEAM</span>
-            <h2 id="team-selector-title">選擇小隊</h2>
-          </div>
-          <p className="team-selector-note">請務必正確選擇自己的小隊。</p>
-          <div className="team-fields">
-            <label>
-              <span>小隊名稱</span>
-              <select
-                value={teamName}
-                onChange={(event) => {
-                  setTeamName(event.target.value);
-                  setTeamError('');
-                }}
-              >
-                <option value="">請選擇小隊</option>
-                {TEAM_OPTIONS.map((team) => <option value={team} key={team}>{team}</option>)}
-              </select>
-            </label>
-          </div>
-          {teamError && <p className="team-error" role="alert">{teamError}</p>}
-        </section>
-      )}
+      <section className="team-selector" aria-labelledby="team-selector-title">
+        <div className="section-heading">
+          <span>TEAM</span>
+          <h2 id="team-selector-title">選擇小隊</h2>
+        </div>
+        <p className="team-selector-note">請務必正確選擇自己的小隊。</p>
+        <div className="team-fields">
+          <label>
+            <span>小隊名稱</span>
+            <select
+              value={teamName}
+              onChange={(event) => {
+                setTeamName(event.target.value);
+                setTeamError('');
+              }}
+            >
+              <option value="">請選擇小隊</option>
+              {teamOptions.map((team) => <option value={team} key={team}>{team}</option>)}
+            </select>
+          </label>
+        </div>
+        {teamError && <p className="team-error" role="alert">{teamError}</p>}
+      </section>
       <div className="stat-row">
         <div><strong>{activity.stages.length}</strong><span>個體驗</span></div>
         <div><strong>{activity.durationMinutes}</strong><span>預估分鐘</span></div>

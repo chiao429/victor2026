@@ -15,6 +15,7 @@ describe('activity progress', () => {
     const progress = {
       ...createInitialProgress(),
       role: 'member' as const,
+      teamName: '婉喻小隊',
       started: true,
       currentStageIndex: 1,
       currentStepIndex: 2,

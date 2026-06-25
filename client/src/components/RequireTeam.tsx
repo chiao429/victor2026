@@ -3,7 +3,7 @@ import { useActivityProgress } from '../hooks/useActivityProgress';
 
 export function RequireTeam() {
   const { progress } = useActivityProgress();
-  return progress.role === 'member' || Boolean(progress.teamName)
+  return Boolean(progress.teamName)
     ? <Outlet />
     : <Navigate to="/instructions" replace />;
 }

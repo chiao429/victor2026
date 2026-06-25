@@ -8,6 +8,7 @@ import { visitedProgress } from '../utils/progress';
 import {
   canEnterSequencedStage,
   getNextAvailableStageId,
+  isManualStageTeam,
   normalizeTeamName,
   parseStageLocationsCsv,
   parseStageSequenceCsv,
@@ -27,14 +28,16 @@ export function StageSelectPage() {
   const visitedCount = progress.visitedStageIds.length;
   const completedCount = progress.completedStageIds.length;
   const isLeader = progress.role === 'leader';
+  const hasTeamSequence = Boolean(progress.teamName);
+  const usesManualSequence = isManualStageTeam(progress.teamName);
   const teamSequence = useMemo(() => {
-    if (!isLeader || !progress.teamName) return null;
+    if (!hasTeamSequence || usesManualSequence) return null;
     return stageSequences[normalizeTeamName(progress.teamName)] ?? null;
-  }, [isLeader, progress.teamName, stageSequences]);
+  }, [hasTeamSequence, progress.teamName, stageSequences, usesManualSequence]);
   const teamLocations = useMemo(() => {
-    if (!isLeader || !progress.teamName) return null;
+    if (!hasTeamSequence || usesManualSequence) return null;
     return stageLocations[normalizeTeamName(progress.teamName)] ?? null;
-  }, [isLeader, progress.teamName, stageLocations]);
+  }, [hasTeamSequence, progress.teamName, stageLocations, usesManualSequence]);
   const stageById = useMemo(() => new Map(activity.stages.map((stage) => [stage.id, stage])), []);
   const orderedStages = teamSequence
     ? teamSequence.map((stageId) => stageById.get(stageId)).filter((stage): stage is Stage => Boolean(stage))
@@ -81,19 +84,20 @@ export function StageSelectPage() {
     <Layout eyebrow="CHOOSE YOUR PATH · 體驗總覽" progress={visitedProgress(progress, activity.stages.length)}>
       <h1 className="display-title">體驗進度</h1>
       <p className="lead">
-        {isLeader
+        {hasTeamSequence
           ? '請依照小隊指定順序進行，完成目前開放的場景後才會解鎖下一個。'
           : '到達地點後再開始任務，走過的地方會留在進度裡。'}
       </p>
-      {isLeader && (
+      {hasTeamSequence && (
         <div className="sequence-notice">
           <strong>{progress.teamName}</strong>
           <span>
-            {sequenceStatus === 'loading' && '正在載入小隊體驗順序...'}
-            {sequenceStatus === 'error' && '無法載入體驗順序，請確認 stageSequence.csv 是否存在。'}
-            {sequenceStatus === 'ready' && teamSequence && nextAvailableStageId && `下一個體驗：${stageById.get(nextAvailableStageId)?.title ?? '指定體驗'}`}
-            {sequenceStatus === 'ready' && teamSequence && !nextAvailableStageId && '所有指定體驗皆已完成。'}
-            {sequenceStatus === 'ready' && !teamSequence && '找不到此小隊的體驗順序，請返回出發前重新選擇小隊。'}
+            {usesManualSequence && '手動模式：所有體驗皆可前往。'}
+            {!usesManualSequence && sequenceStatus === 'loading' && '正在載入小隊體驗順序...'}
+            {!usesManualSequence && sequenceStatus === 'error' && '無法載入體驗順序，請確認 stageSequence.csv 是否存在。'}
+            {!usesManualSequence && sequenceStatus === 'ready' && teamSequence && nextAvailableStageId && `下一個體驗：${stageById.get(nextAvailableStageId)?.title ?? '指定體驗'}`}
+            {!usesManualSequence && sequenceStatus === 'ready' && teamSequence && !nextAvailableStageId && '所有指定體驗皆已完成。'}
+            {!usesManualSequence && sequenceStatus === 'ready' && !teamSequence && '找不到此小隊的體驗順序，請返回出發前重新選擇小隊。'}
           </span>
         </div>
       )}
@@ -105,11 +109,11 @@ export function StageSelectPage() {
         {orderedStages.map((stage, index) => {
           const completed = progress.completedStageIds.includes(stage.id);
           const visited = progress.visitedStageIds.includes(stage.id);
-          const waitingForSequence = isLeader && sequenceStatus !== 'ready';
+          const waitingForSequence = hasTeamSequence && !usesManualSequence && sequenceStatus !== 'ready';
           const locked = waitingForSequence
-            || (isLeader && (!teamSequence || !canEnterSequencedStage(stage.id, teamSequence, progress.completedStageIds)));
+            || (hasTeamSequence && !usesManualSequence && (!teamSequence || !canEnterSequencedStage(stage.id, teamSequence, progress.completedStageIds)));
           const status = locked ? '尚未解鎖' : completed ? '已完成' : visited ? '進行中' : '可前往';
-          const stageLocation = isLeader ? teamLocations?.[stage.id] ?? null : null;
+          const stageLocation = hasTeamSequence ? teamLocations?.[stage.id] ?? null : null;
           const stageMeta = [stageLocation, isLeader ? STAGE_TIME_LABEL : null].filter(Boolean).join(' · ');
           return (
             <button
@@ -119,7 +123,7 @@ export function StageSelectPage() {
               aria-disabled={locked}
             >
               <img src={stage.mapImageUrl} alt="" />
-              <span className="stage-card-number">{isLeader ? '指定順序' : '體驗'} {String(index + 1).padStart(2, '0')}</span>
+              <span className="stage-card-number">{hasTeamSequence ? '指定順序' : '體驗'} {String(index + 1).padStart(2, '0')}</span>
               <strong>{stage.title}</strong>
               {stageMeta && <small>{stageMeta}</small>}
               <span className="stage-card-status">

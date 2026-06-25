@@ -95,7 +95,7 @@ export function completeStage(
 export function resumePath(progress: ActivityProgress, stages: Stage[]): string {
   if (!progress.started) return '/story';
   if (!progress.role) return '/story';
-  if (progress.role === 'leader' && !progress.teamName) return '/instructions';
+  if (!progress.teamName) return '/instructions';
   if (progress.finished && progress.completedStageIds.length === stages.length) return '/complete';
   return '/stages';
 }
