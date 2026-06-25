@@ -54,7 +54,7 @@ export function StoryPage() {
     <Layout eyebrow="THE DIARY · 少年的日記">
       <div className="story-heading">
         <div>
-          <h1 className="display-title">沒有說完的話</h1>
+          <h1 className="display-title">藏在心底的秘密</h1>
           <p className="diary-swipe-hint">左右滑動，讀完這五篇日記</p>
         </div>
         <span aria-live="polite">{currentEntry + 1} / {activity.diaryEntries.length}</span>
@@ -120,7 +120,7 @@ export function StoryPage() {
               重新開始
             </button>
             <button className="button button-primary" onClick={() => navigate('/reader-letter')}>
-              開始闖關 <span>→</span>
+              開始體驗 <span>→</span>
             </button>
           </div>
         </div>

@@ -13,7 +13,7 @@ import { createInitialProgress, loadProgress, STORAGE_KEY } from '../utils/progr
 interface ProgressContextValue {
   progress: ActivityProgress;
   setRole: (role: 'leader' | 'member') => void;
-  setTeam: (group: '眾教會' | 'PPC', teamName: string) => void;
+  setTeam: (teamName: string) => void;
   setPosition: (stageIndex: number, stepIndex: number, stageId: string) => void;
   saveAnswer: (key: string, value: string) => void;
   saveUpload: (key: string, value: UploadedFileInfo) => void;
@@ -44,7 +44,7 @@ export function ActivityProgressProvider({ children }: { children: ReactNode }) 
         started: true,
         ...(role === 'member' ? { teamGroup: null, teamName: '' } : {}),
       }),
-      setTeam: (teamGroup, teamName) => patch({ teamGroup, teamName }),
+      setTeam: (teamName) => patch({ teamGroup: null, teamName }),
       setPosition: (currentStageIndex, currentStepIndex, stageId) =>
         setProgress((current) => {
           return {

@@ -40,7 +40,7 @@ export function StageStepPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stageIndex, stepIndex]);
 
-  if (!stage) return <ErrorPage message="找不到這個關卡。" />;
+  if (!stage) return <ErrorPage message="找不到這個體驗。" />;
   if (!Number.isInteger(stepIndex) || !step) return <ErrorPage message="找不到這個步驟。" />;
 
   const allowed = canCompleteStep(step, stage.id, progress);
@@ -60,7 +60,7 @@ export function StageStepPage() {
   const nextStep = stage.steps[stepIndex + 1];
   const entersNextTask = nextStep?.taskNumber && nextStep.taskNumber !== taskNumber;
   const nextLabel = stepIndex === stage.steps.length - 1
-    ? '完成關卡'
+    ? '完成體驗'
     : entersNextTask
       ? `進入任務${nextStep.taskNumber === 2 ? '二' : nextStep.taskNumber}`
       : '下一步';

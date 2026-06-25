@@ -70,7 +70,7 @@ export function PhotoUpload({
           </button>
         </div>
       )}
-      <p className="upload-notice">上傳完照片才能完成關卡。</p>
+      <p className="upload-notice">上傳完照片才能完成體驗。</p>
       {(file || uploaded) && (
         <p className="success-message">
           ✓ 已選擇照片{file?.name ?? uploaded?.fileName ? `：${file?.name ?? uploaded?.fileName}` : ''}

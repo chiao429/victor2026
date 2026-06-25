@@ -68,38 +68,38 @@ export function StageSelectPage() {
 
   const enterStage = (stageId: string, completed: boolean, locked: boolean) => {
     if (locked) {
-      window.alert('請依照小隊指定順序闖關，先完成目前開放的關卡。');
+      window.alert('請依照小隊指定順序體驗，先完成目前開放的體驗。');
       return;
     }
-    if (completed && !window.confirm('該關卡已完成，是否要再進入一次？')) {
+    if (completed && !window.confirm('該體驗已完成，是否要再進入一次？')) {
       return;
     }
     navigate(`/stages/${stageId}`);
   };
 
   return (
-    <Layout eyebrow="CHOOSE YOUR PATH · 關卡總覽" progress={visitedProgress(progress, activity.stages.length)}>
-      <h1 className="display-title">關卡進度</h1>
+    <Layout eyebrow="CHOOSE YOUR PATH · 體驗總覽" progress={visitedProgress(progress, activity.stages.length)}>
+      <h1 className="display-title">體驗進度</h1>
       <p className="lead">
         {isLeader
-          ? '請依照小隊指定順序闖關，完成目前開放的關卡後才會解鎖下一關。'
+          ? '請依照小隊指定順序進行，完成目前開放的場景後才會解鎖下一個。'
           : '到達地點後再開始任務，走過的地方會留在進度裡。'}
       </p>
       {isLeader && (
         <div className="sequence-notice">
           <strong>{progress.teamName}</strong>
           <span>
-            {sequenceStatus === 'loading' && '正在載入小隊闖關順序...'}
-            {sequenceStatus === 'error' && '無法載入闖關順序，請確認 stageSequence.csv 是否存在。'}
-            {sequenceStatus === 'ready' && teamSequence && nextAvailableStageId && `下一關：${stageById.get(nextAvailableStageId)?.title ?? '指定關卡'}`}
-            {sequenceStatus === 'ready' && teamSequence && !nextAvailableStageId && '所有指定關卡皆已完成。'}
-            {sequenceStatus === 'ready' && !teamSequence && '找不到此小隊的闖關順序，請返回出發前重新選擇小隊。'}
+            {sequenceStatus === 'loading' && '正在載入小隊體驗順序...'}
+            {sequenceStatus === 'error' && '無法載入體驗順序，請確認 stageSequence.csv 是否存在。'}
+            {sequenceStatus === 'ready' && teamSequence && nextAvailableStageId && `下一個體驗：${stageById.get(nextAvailableStageId)?.title ?? '指定體驗'}`}
+            {sequenceStatus === 'ready' && teamSequence && !nextAvailableStageId && '所有指定體驗皆已完成。'}
+            {sequenceStatus === 'ready' && !teamSequence && '找不到此小隊的體驗順序，請返回出發前重新選擇小隊。'}
           </span>
         </div>
       )}
       <div className="stage-progress-summary">
         <span>已走訪 {visitedCount} / {activity.stages.length}</span>
-        <span>已完成 {completedCount} / {activity.stages.length}</span>
+        <span>已完成 {completedCount} / {activity.stages.length} 個體驗</span>
       </div>
       <div className="stage-grid">
         {orderedStages.map((stage, index) => {
@@ -119,7 +119,7 @@ export function StageSelectPage() {
               aria-disabled={locked}
             >
               <img src={stage.mapImageUrl} alt="" />
-              <span className="stage-card-number">{isLeader ? '指定順序' : '關卡'} {String(index + 1).padStart(2, '0')}</span>
+              <span className="stage-card-number">{isLeader ? '指定順序' : '體驗'} {String(index + 1).padStart(2, '0')}</span>
               <strong>{stage.title}</strong>
               {stageMeta && <small>{stageMeta}</small>}
               <span className="stage-card-status">

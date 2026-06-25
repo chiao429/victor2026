@@ -56,7 +56,7 @@ export function StageIntroPage() {
     };
   }, [progress.role]);
 
-  if (!stage) return <ErrorPage message="找不到這個關卡。" />;
+  if (!stage) return <ErrorPage message="找不到這個體驗。" />;
   const teamSequence = progress.role === 'leader'
     ? stageSequences[normalizeTeamName(progress.teamName)] ?? null
     : null;
@@ -67,27 +67,27 @@ export function StageIntroPage() {
     && sequenceStatus === 'ready'
     && !canEnterSequencedStage(stage.id, teamSequence, progress.completedStageIds);
   if (sequenceStatus === 'error') {
-    return <ErrorPage message="無法載入小隊闖關順序，請回到關卡總覽後再試一次。" />;
+    return <ErrorPage message="無法載入小隊體驗順序，請回到體驗總覽後再試一次。" />;
   }
   if (progress.role === 'leader' && sequenceStatus === 'loading') {
     return (
       <Layout eyebrow="LOADING · 載入中" progress={visitedProgress(progress, activity.stages.length)}>
         <h1 className="display-title">正在確認小隊順序</h1>
-        <p className="lead">請稍候，系統正在讀取這個小隊的指定闖關順序。</p>
+        <p className="lead">請稍候，系統正在讀取這個小隊的指定體驗順序。</p>
       </Layout>
     );
   }
   if (stageIsLocked || (progress.role === 'leader' && !teamSequence)) {
-    return <ErrorPage message="這不是目前小隊開放的關卡，請依照指定順序前往。" />;
+    return <ErrorPage message="這不是目前小隊開放的體驗，請依照指定順序前往。" />;
   }
 
   return (
-    <Layout eyebrow={`CHAPTER ${String(stageIndex + 1).padStart(2, '0')} · 關卡介紹`} progress={visitedProgress(progress, activity.stages.length)}>
+    <Layout eyebrow={`CHAPTER ${String(stageIndex + 1).padStart(2, '0')} · 體驗介紹`} progress={visitedProgress(progress, activity.stages.length)}>
       <div className="stage-count">第 {stageIndex + 1} 關 / 共 {activity.stages.length} 關</div>
       <h1 className="display-title">{stage.title}</h1>
       <p className="lead">{stage.description}</p>
       <div className="location-card">
-        <img src={stage.mapImageUrl} alt={stageLocation ? `${stageLocation}位置圖` : `${stage.title}關卡圖`} />
+        <img src={stage.mapImageUrl} alt={stageLocation ? `${stageLocation}位置圖` : `${stage.title}體驗圖`} />
         <div>
           {stageLocation && (
             <>
@@ -99,13 +99,13 @@ export function StageIntroPage() {
         </div>
       </div>
       <BottomActions>
-        <button className="button button-ghost compact" onClick={() => navigate('/stages')}>← 關卡總覽</button>
+        <button className="button button-ghost compact" onClick={() => navigate('/stages')}>← 體驗總覽</button>
         <button className="button button-primary" onClick={() => {
           if (progress.role === 'leader') startStageTimer(stage.id);
           setPosition(stageIndex, 0, stage.id);
           navigate(`/stages/${stage.id}/steps/0`);
         }}>
-          我們到了，開始關卡 <span>→</span>
+          我們到了，開始體驗 <span>→</span>
         </button>
       </BottomActions>
     </Layout>

@@ -71,7 +71,7 @@ export function LeaderMapButton() {
             <div className="map-modal-header">
               <div>
                 <span>MAP · 樓層地圖</span>
-                <h2 id="map-modal-title">教室關卡位置</h2>
+                <h2 id="map-modal-title">教室體驗位置</h2>
               </div>
               <button
                 type="button"
@@ -84,9 +84,9 @@ export function LeaderMapButton() {
             </div>
             <div className="map-legend">
               <img src="/maps/stage.png" alt="" />
-              <span>教室關卡位置</span>
+              <span>教室體驗位置</span>
             </div>
-            <p className="map-warning">非闖關區域請勿任意進入！</p>
+            <p className="map-warning">非體驗區域請勿任意進入！</p>
             <div
               className="map-carousel"
               onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}

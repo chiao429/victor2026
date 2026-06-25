@@ -32,7 +32,7 @@ describe('PhotoUpload', () => {
       fileName: 'team-photo.jpg',
       selectedAt: expect.any(String),
     });
-    expect(screen.getByText(/上傳完照片才能完成關卡/)).toBeInTheDocument();
+    expect(screen.getByText(/上傳完照片才能完成體驗/)).toBeInTheDocument();
     expect(screen.getByText(/已選擇照片/)).toBeInTheDocument();
     expect(fetchSpy).not.toHaveBeenCalled();
   });

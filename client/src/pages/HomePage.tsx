@@ -25,7 +25,7 @@ export function HomePage() {
         <p className="hero-year">2026 · CAMPUS EXPERIENCE</p>
         <div className="diary-visual" aria-label="少年日記活動主視覺">
           <span className="tape" />
-          <span className="scribble">尋找<br />沒有說完的話</span>
+          <span className="scribble">尋找<br />遺失的自己</span>
           <div className="diary-cover">
             <small>VICTOR</small>
             <h1>少年<br />日記</h1>

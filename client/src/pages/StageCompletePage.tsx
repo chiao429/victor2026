@@ -27,13 +27,13 @@ export function StageCompletePage() {
     }
   }, [markStageComplete, progress.completedStageIds, stage, stageIndex]);
 
-  if (!stage) return <ErrorPage message="找不到這個關卡。" />;
+  if (!stage) return <ErrorPage message="找不到這個體驗。" />;
 
   const leaderScript = stage.completionLeaderScript
     ?? (stage.id === 'love-my-home' ? '請用塑膠袋帶走成品，勿留在教室中。' : undefined);
 
   return (
-    <Layout eyebrow="CHAPTER COMPLETE · 關卡完成" progress={visitedProgress(progress, activity.stages.length)}>
+    <Layout eyebrow="CHAPTER COMPLETE · 體驗完成" progress={visitedProgress(progress, activity.stages.length)}>
       <div className="completion-mark">✓</div>
       <h1 className="display-title">{stage.title}<br />已完成</h1>
       {progress.role === 'leader' && leaderScript && (
@@ -50,14 +50,14 @@ export function StageCompletePage() {
       <p className="lead">
         {allStagesComplete
           ? '所有頁面都已走完，帶著你們的答案前往結尾。'
-          : `目前已完成 ${completedAfterThisStage} / ${activity.stages.length} 關，請繼續下一關。`}
+          : `目前已完成 ${completedAfterThisStage} / ${activity.stages.length} 個體驗，請繼續下一個體驗。`}
       </p>
       <BottomActions>
         <button
           className="button button-primary"
           onClick={() => navigate(allStagesComplete ? '/complete' : '/stages')}
         >
-          {allStagesComplete ? '前往活動結尾' : '回到關卡總覽'} <span>→</span>
+          {allStagesComplete ? '前往活動結尾' : '回到體驗總覽'} <span>→</span>
         </button>
       </BottomActions>
     </Layout>

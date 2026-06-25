@@ -9,7 +9,7 @@
 ## Phase 1：分析
 
 1. 建立 npm workspace，分離 `client` 與 `server`。
-2. 以 TypeScript 型別與 JSON 管理活動及三個示範關卡。
+2. 以 TypeScript 型別與 JSON 管理活動及三個示範體驗。
 3. 以前端 Context + `useActivityProgress` 統一管理 localStorage。
 4. 後端提供 multipart upload API，支援 mock 與 Google Drive OAuth refresh token。
 5. 使用 Vitest、Testing Library 與 Supertest 建立關鍵流程測試。
@@ -26,11 +26,11 @@
 - iOS Safari 的 `capture` 行為依裝置與瀏覽器版本不同，仍保留相簿選擇能力。
 - localStorage 只適合單機 MVP；清除瀏覽器資料或更換裝置會失去進度。
 - 活動地圖、正式影片與企劃書文案尚未提供，目前以 SVG placeholder 與示範文案代替。
-- 使用者直接輸入 URL 的解鎖檢查以「目前進度與已完成關卡」為準；此機制不是安全性權限控制。
+- 使用者直接輸入 URL 的解鎖檢查以「目前進度與已完成體驗」為準；此機制不是安全性權限控制。
 
 ## 不影響 MVP 的未確認項目
 
-- 正式活動日期、集合地點、關卡實際地址與地圖。
+- 正式活動日期、集合地點、體驗實際地址與地圖。
 - 完整故事文本、小隊長逐字稿、品牌字型與主視覺。
 - Google Drive 檔案是否需要公開讀取權限；MVP 僅回傳 Drive file ID 與檔名。
 - `teamId` 的正式產生方式；MVP 固定為 `default-team`。

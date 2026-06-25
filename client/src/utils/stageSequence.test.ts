@@ -13,7 +13,7 @@ const stages = [
   { id: 'love-my-home', title: '愛．我的家' },
   { id: 'if-it-were-me', title: '我只是沒有說話' },
   { id: 'seen-by-the-father', title: '在天父眼中' },
-  { id: 'future-message', title: '給還在找方向的人' },
+  { id: 'future-message', title: '迷惘少年' },
 ] as Stage[];
 
 describe('stage sequence', () => {
@@ -23,7 +23,7 @@ describe('stage sequence', () => {
 （T20109）","愛，我的家
 （T20110）","如果換成是我
 （T20210）","在天父眼中
-（T201A）","給還在找方向的人
+（T201A）","迷惘少年
 （T20304）"`;
 
     expect(parseStageSequenceCsv(csv, stages)).toEqual({

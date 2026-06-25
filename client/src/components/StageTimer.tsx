@@ -29,7 +29,7 @@ export function StageTimer({ stage }: { stage: Stage }) {
   return (
     <>
       <div className={`stage-timer ${remainingSeconds <= 120 ? 'urgent' : ''}`} aria-live="polite">
-        <span>關卡倒數</span>
+        <span>體驗倒數</span>
         <strong>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</strong>
       </div>
       {(showTwoMinutes || showTimeUp) && (
@@ -39,7 +39,7 @@ export function StageTimer({ stage }: { stage: Stage }) {
             <h2 id="timer-alert-title">{showTimeUp ? '時間到' : '倒數兩分鐘'}</h2>
             <p>
               {showTimeUp
-                ? '完成關卡後，請儘速移動到下個場地。'
+                ? '完成體驗後，請儘速移動到下個場地。'
                 : '倒數兩分鐘，請準備開始結尾。'}
             </p>
             <button
