@@ -3,7 +3,8 @@ import type { Stage } from '../types/activity';
 export type StageSequenceMap = Record<string, string[]>;
 export type StageLocationMap = Record<string, Record<string, string>>;
 
-export const MANUAL_STAGE_TEAM_NAME = '手動闖關（非必要請勿選擇）';
+export const MANUAL_STAGE_TEAM_NAME = '不限制隊伍（非必要請勿選擇）';
+export const UNRESTRICTED_MEMBER_TEAM_NAME = '不限制隊伍';
 
 const TITLE_ALIASES: Record<string, string> = {
   [normalizeStageTitle('我不是資料')]: 'not-data',
@@ -22,6 +23,10 @@ export function normalizeTeamName(teamName: string) {
 
 export function isManualStageTeam(teamName: string) {
   return teamName === MANUAL_STAGE_TEAM_NAME;
+}
+
+export function isUnrestrictedStageTeam(teamName: string) {
+  return teamName === MANUAL_STAGE_TEAM_NAME || teamName === UNRESTRICTED_MEMBER_TEAM_NAME;
 }
 
 export function parseStageSequenceCsv(csv: string, stages: Stage[]): StageSequenceMap {

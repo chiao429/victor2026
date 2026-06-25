@@ -39,6 +39,7 @@ export interface StageStep {
   }[];
   leaderScript?: string;
   leaderPanelTitle?: string;
+  leaderPanelPlacement?: 'after-first-content-section' | 'after-content-sections';
   ratingCard?: {
     title: string;
     instruction: string;

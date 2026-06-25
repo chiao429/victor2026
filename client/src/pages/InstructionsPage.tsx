@@ -4,7 +4,7 @@ import activityData from '../data/activity.json';
 import type { ActivityConfig } from '../types/activity';
 import { BottomActions, Layout } from '../components/Layout';
 import { useActivityProgress } from '../hooks/useActivityProgress';
-import { MANUAL_STAGE_TEAM_NAME } from '../utils/stageSequence';
+import { MANUAL_STAGE_TEAM_NAME, UNRESTRICTED_MEMBER_TEAM_NAME } from '../utils/stageSequence';
 
 const activity = activityData as ActivityConfig;
 const TEAM_OPTIONS_BASE = [
@@ -18,6 +18,10 @@ const LEADER_TEAM_OPTIONS = [
   ...TEAM_OPTIONS_BASE,
   MANUAL_STAGE_TEAM_NAME,
 ] as const;
+const MEMBER_TEAM_OPTIONS = [
+  ...TEAM_OPTIONS_BASE,
+  UNRESTRICTED_MEMBER_TEAM_NAME,
+] as const;
 
 export function InstructionsPage() {
   const navigate = useNavigate();
@@ -25,7 +29,7 @@ export function InstructionsPage() {
   const [teamName, setTeamName] = useState(progress.teamName);
   const [teamError, setTeamError] = useState('');
   const isLeader = progress.role === 'leader';
-  const teamOptions = isLeader ? LEADER_TEAM_OPTIONS : TEAM_OPTIONS_BASE;
+  const teamOptions = isLeader ? LEADER_TEAM_OPTIONS : MEMBER_TEAM_OPTIONS;
   const visibleInstructions = isLeader
     ? activity.instructions
     : activity.instructions.filter((item) => !item.includes('小隊長'));
@@ -67,7 +71,7 @@ export function InstructionsPage() {
         {teamError && <p className="team-error" role="alert">{teamError}</p>}
       </section>
       <div className="stat-row">
-        <div><strong>{activity.stages.length}</strong><span>個體驗</span></div>
+        <div><strong>{activity.stages.length}</strong><span>項體驗</span></div>
         <div><strong>{activity.durationMinutes}</strong><span>預估分鐘</span></div>
         <div><strong>1</strong><span>支隊伍手機</span></div>
       </div>

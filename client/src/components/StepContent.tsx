@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import type { ActivityProgress, CharacterCardData, StageStep, UploadedFileInfo } from '../types/activity';
 import { answerKey } from '../utils/progress';
 import { CharacterCard } from './CharacterCard';
@@ -38,6 +39,18 @@ export function StepContent({
 }) {
   const key = answerKey(stageId, step.id);
   const value = progress.answers[key] ?? '';
+  const renderLeaderPanel = () => (
+    <details className="leader-script leader-script-collapsible" open>
+      <summary>{step.leaderPanelTitle ?? '小隊長指引'}</summary>
+      <div>
+        {step.leaderScript?.split('\n\n').map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
+    </details>
+  );
+  const renderLeaderPanelAfterFirstSection = step.leaderPanelPlacement === 'after-first-content-section';
+  const renderLeaderPanelAfterContentSections = step.leaderPanelPlacement === 'after-content-sections';
 
   return (
     <article className={`step-content step-${step.type}`}>
@@ -45,7 +58,7 @@ export function StepContent({
         {step.type === 'photo-upload' ? '▣' : step.type === 'discussion' ? '◌' : '✦'}
       </div>
       <h1>{!isLeader && step.memberTitle ? step.memberTitle : step.title}</h1>
-      {isLeader && step.leaderScript && ![
+      {isLeader && step.leaderScript && !renderLeaderPanelAfterFirstSection && !renderLeaderPanelAfterContentSections && ![
         'notebook-intro',
         'notebook-writing',
         'bullying-scenario',
@@ -56,16 +69,7 @@ export function StepContent({
         'line-reflection',
         'faith-sharing',
         'scripture-encouragement',
-      ].includes(step.type) && (
-        <details className="leader-script leader-script-collapsible" open>
-          <summary>{step.leaderPanelTitle ?? '小隊長指引'}</summary>
-          <div>
-            {step.leaderScript.split('\n\n').map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-        </details>
-      )}
+      ].includes(step.type) && renderLeaderPanel()}
       {step.type === 'task-transition' && <TaskTransition step={step} />}
       {step.type === 'real-profile' && <RealProfile step={step} />}
       {step.type === 'reveal-story' && <RevealStory step={step} />}
@@ -92,14 +96,18 @@ export function StepContent({
       {step.contentSections && (
         <div className="content-section-list">
           {step.contentSections.map((section, index) => (
-            <section className="content-section-card" key={section.title}>
-              <span className="content-section-index">{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <h2>{section.title}</h2>
-                <p>{section.body}</p>
-              </div>
-            </section>
+            <Fragment key={section.title}>
+              <section className="content-section-card">
+                <span className="content-section-index">{String(index + 1).padStart(2, '0')}</span>
+                <div>
+                  <h2>{section.title}</h2>
+                  <p>{section.body}</p>
+                </div>
+              </section>
+              {isLeader && step.leaderScript && renderLeaderPanelAfterFirstSection && index === 0 && renderLeaderPanel()}
+            </Fragment>
           ))}
+          {isLeader && step.leaderScript && renderLeaderPanelAfterContentSections && renderLeaderPanel()}
         </div>
       )}
       {step.content && !step.ratingCard && ![

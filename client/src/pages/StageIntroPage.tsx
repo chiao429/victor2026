@@ -7,7 +7,7 @@ import { useActivityProgress } from '../hooks/useActivityProgress';
 import { visitedProgress } from '../utils/progress';
 import {
   canEnterSequencedStage,
-  isManualStageTeam,
+  isUnrestrictedStageTeam,
   normalizeTeamName,
   parseStageLocationsCsv,
   parseStageSequenceCsv,
@@ -30,7 +30,7 @@ export function StageIntroPage() {
   const stage = activity.stages[stageIndex];
 
   useEffect(() => {
-    if (!progress.teamName || isManualStageTeam(progress.teamName)) {
+    if (!progress.teamName || isUnrestrictedStageTeam(progress.teamName)) {
       setSequenceStatus('ready');
       return;
     }
@@ -57,25 +57,25 @@ export function StageIntroPage() {
     };
   }, [progress.teamName]);
 
-  if (!stage) return <ErrorPage message="找不到這個體驗。" />;
+  if (!stage) return <ErrorPage message="找不到這項體驗。" />;
   const hasTeamSequence = Boolean(progress.teamName);
-  const usesManualSequence = isManualStageTeam(progress.teamName);
+  const usesUnrestrictedSequence = isUnrestrictedStageTeam(progress.teamName);
   const teamSequence = hasTeamSequence
-    && !usesManualSequence
+    && !usesUnrestrictedSequence
     ? stageSequences[normalizeTeamName(progress.teamName)] ?? null
     : null;
   const stageLocation = hasTeamSequence
-    && !usesManualSequence
+    && !usesUnrestrictedSequence
     ? stageLocations[normalizeTeamName(progress.teamName)]?.[stage.id] ?? null
     : null;
   const stageIsLocked = hasTeamSequence
-    && !usesManualSequence
+    && !usesUnrestrictedSequence
     && sequenceStatus === 'ready'
     && !canEnterSequencedStage(stage.id, teamSequence, progress.completedStageIds);
   if (sequenceStatus === 'error') {
     return <ErrorPage message="無法載入小隊體驗順序，請回到體驗總覽後再試一次。" />;
   }
-  if (hasTeamSequence && !usesManualSequence && sequenceStatus === 'loading') {
+  if (hasTeamSequence && !usesUnrestrictedSequence && sequenceStatus === 'loading') {
     return (
       <Layout eyebrow="LOADING · 載入中" progress={visitedProgress(progress, activity.stages.length)}>
         <h1 className="display-title">正在確認小隊順序</h1>
@@ -83,13 +83,13 @@ export function StageIntroPage() {
       </Layout>
     );
   }
-  if (stageIsLocked || (hasTeamSequence && !usesManualSequence && !teamSequence)) {
+  if (stageIsLocked || (hasTeamSequence && !usesUnrestrictedSequence && !teamSequence)) {
     return <ErrorPage message="這不是目前小隊開放的體驗，請依照指定順序前往。" />;
   }
 
   return (
     <Layout eyebrow={`CHAPTER ${String(stageIndex + 1).padStart(2, '0')} · 體驗介紹`} progress={visitedProgress(progress, activity.stages.length)}>
-      <div className="stage-count">第 {stageIndex + 1} 關 / 共 {activity.stages.length} 關</div>
+      <div className="stage-count">體驗{stageIndex + 1}/共{activity.stages.length}項體驗</div>
       <h1 className="display-title">{stage.title}</h1>
       <p className="lead">{stage.description}</p>
       <div className="location-card">

@@ -27,7 +27,7 @@ export function StageCompletePage() {
     }
   }, [markStageComplete, progress.completedStageIds, stage, stageIndex]);
 
-  if (!stage) return <ErrorPage message="找不到這個體驗。" />;
+  if (!stage) return <ErrorPage message="找不到這項體驗。" />;
 
   const leaderScript = stage.completionLeaderScript
     ?? (stage.id === 'love-my-home' ? '請用塑膠袋帶走成品，勿留在教室中。' : undefined);
@@ -50,7 +50,7 @@ export function StageCompletePage() {
       <p className="lead">
         {allStagesComplete
           ? '所有頁面都已走完，帶著你們的答案前往結尾。'
-          : `目前已完成 ${completedAfterThisStage} / ${activity.stages.length} 個體驗，請繼續下一個體驗。`}
+          : `目前已完成 ${completedAfterThisStage} / ${activity.stages.length} 項體驗，請繼續下一個體驗。`}
       </p>
       <BottomActions>
         <button

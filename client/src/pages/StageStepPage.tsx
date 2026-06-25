@@ -40,7 +40,7 @@ export function StageStepPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stageIndex, stepIndex]);
 
-  if (!stage) return <ErrorPage message="找不到這個體驗。" />;
+  if (!stage) return <ErrorPage message="找不到這項體驗。" />;
   if (!Number.isInteger(stepIndex) || !step) return <ErrorPage message="找不到這個步驟。" />;
 
   const allowed = canCompleteStep(step, stage.id, progress);
